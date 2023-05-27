@@ -97,5 +97,7 @@
             @yield('content1')
         </main>
     </div>
+    
+    @yield('scripts')
 </body>
 </html>

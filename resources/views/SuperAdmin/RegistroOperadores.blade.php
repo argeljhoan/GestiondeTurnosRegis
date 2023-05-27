@@ -57,7 +57,7 @@
                             <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                                <input id="password_confirmation" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                             </div>
                         </div>
 
@@ -75,8 +75,16 @@
                               </select>
                             </div>
                         </div>
-
-
+                        @if (Session::has('error'))
+                        <div id="error-message" class="alert alert-danger">
+                            {{ Session::get('error') }}
+                        </div>
+                       @endif
+                       @if (Session::has('success'))
+                       <div id="error-message" class="alert alert-primary">
+                           {{ Session::get('success') }}
+                       </div>
+                     @endif
 
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
@@ -91,4 +99,15 @@
         </div>
     </div>
 </div>
+@endsection
+@section('scripts')
+<script src="{{ asset('js/app.js') }}"></script>
+<script>
+    setTimeout(function() {
+        var errorMessage = document.getElementById('error-message');
+        if (errorMessage) {
+            errorMessage.style.display = 'none';
+        }
+    }, 5000);
+</script>
 @endsection

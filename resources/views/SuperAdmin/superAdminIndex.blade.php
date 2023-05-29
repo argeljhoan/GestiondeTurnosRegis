@@ -4,10 +4,45 @@
 @section('content1')
 
 
-<section class="container">
-    <div >
-        <img src="https://www.google.com/imgres?imgurl=https%3A%2F%2Fwww.tooltyp.com%2Fwp-content%2Fuploads%2F2014%2F10%2F1900x920-8-beneficios-de-usar-imagenes-en-nuestros-sitios-web.jpg&tbnid=QyjckPLcTSohTM&vet=12ahUKEwiQx4f_39n-AhXoi4QIHcSuA30QMygBegUIARDdAQ..i&imgrefurl=https%3A%2F%2Fwww.tooltyp.com%2F8-beneficios-de-usar-imagenes-en-nuestros-sitios-web%2F&docid=53-N2MbZIY2M8M&w=1900&h=920&q=imagenes&ved=2ahUKEwiQx4f_39n-AhXoi4QIHcSuA30QMygBegUIARDdAQ">
+<section class="main-section">
+    <div class="accordion">
+        <div class="header">
+            <img src="images/logo-black.svg" alt="Logo Registraduría Nacional del Estado Civil">
+        </div>
+        <ul>
+            <li tabindex="0">
+                <div>
+                    <a href="#">
+                        <section class="hero-section">
+                            <div class="content">
+                                <h1>Bienvenido a la Registraduría Especial de Cúcuta</h1>
+                                <p>¡Transformando la experiencia de los trámites en línea!</p>
+                            </div>
+                        </section>
+                    </a>
+                </div>s
+            </li>
+        </ul>
     </div>
 </section>
 
+@endsection
+@section('scripts')
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+  $(document).ready(function() {
+    // Desplazamiento suave al hacer clic en un enlace del menú
+    $('a[data-scroll]').on('click', function(e) {
+      e.preventDefault();
+      var target = $(this).attr('href');
+      $('html, body').animate({
+        scrollTop: $(target).offset().top
+      }, 500);
+    });
+  });
+</script>
+ 
 @endsection

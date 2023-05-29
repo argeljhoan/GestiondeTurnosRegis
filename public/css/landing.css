@@ -1,0 +1,310 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap");
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    background-size: 100% auto;
+    background-repeat: repeat-y;
+    background: radial-gradient(
+            circle at 67.6% 20.39%,
+            rgba(255, 255, 255, 0.5),
+            transparent 69%
+        ),
+        radial-gradient(
+            circle at 88.75% 28.67%,
+            rgba(255, 255, 255, 0.5),
+            transparent 60%
+        ),
+        radial-gradient(circle at 13.33% 0.38%, #c8f7f4, transparent 38%),
+        radial-gradient(circle at 86.77% 1.6%, #bfd4f5, transparent 39%),
+        radial-gradient(
+            circle at 81.09% 74.15%,
+            rgba(255, 255, 255, 0.5),
+            transparent 57%
+        ),
+        radial-gradient(circle at 67.81% 96.71%, #bedbf7, transparent 36%),
+        radial-gradient(circle at 50% 50%, #ffffff, #ffffff 100%);
+    background-repeat: no-repeat;
+}
+.accordion {
+    width: calc(100vw - 40px);
+    overflow: hidden;
+    margin: 5px 20px 20px 20px;
+    border-radius: 30px;
+   
+}
+.header {
+    width: 800px;
+    height: 100px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    border-radius: 40px;
+    left: calc((100vw - 800px) / 2);
+    z-index: 99;
+    background: linear-gradient(
+        198.35deg,
+        #ffffff 31.67%,
+        rgba(255, 255, 255, 0.6) 87.55%
+    );
+    backdrop-filter: blur(4px);
+}
+.header img {
+    width: 100%;
+    max-width: 330px;
+    padding: 10px;
+}
+.accordion ul {
+    width: 100%;
+    display: table;
+    table-layout: fixed;
+    margin: 0;
+    padding: 0;
+}
+.accordion ul li {
+    display: table-cell;
+    vertical-align: bottom;
+    position: relative;
+    width: 33.3333%;
+    transition: all 500ms ease;
+}
+.accordion ul li div {
+    display: block;
+    overflow: hidden;
+    width: 100%;
+}
+.accordion ul li div a {
+    display: block;
+    height: calc(100vh - 25px);
+    width: 100%;
+    position: relative;
+    z-index: 3;
+    padding: 15px 20px;
+    box-sizing: border-box;
+    color: #003057;
+    text-decoration: none;
+    font-family: "Open Sans", sans-serif;
+    transition: all 200ms ease;
+    margin-top: 200px;
+}
+.accordion ul li div a .tarjetas {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: absolute;
+    width: auto;
+    min-width: 350px;
+    height: auto;
+    margin-left: 50px;
+    margin-bottom: 70px;
+    background-color: rgba(255, 255, 255, 0.8);
+    bottom: 0px;
+    border: 2px solid #00f5c8;
+    border-radius: 30px;
+    padding: 10px 30px;
+    
+}
+.accordion ul li div a .tarjetas:hover {
+    transform: scale(1.15);
+}
+.accordion ul li div a .card-mobile {
+    display: none;
+}
+.accordion ul li div a * {
+    opacity: 0;
+    margin: 0;
+    width: 100%;
+    text-overflow: ellipsis;
+    position: relative;
+    z-index: 5;
+    white-space: nowrap;
+    overflow: hidden;
+    -webkit-transform: translateX(-20px);
+    transform: translateX(-20px);
+    -webkit-transition: all 400ms ease;
+    transition: all 400ms ease;
+}
+.accordion ul li div a .tarjetas h1 {
+    font-size: 24px;
+}
+.accordion ul li div a .tarjetas h2 {
+    font-family: "Open Sans", sans-serif;
+    text-overflow: clip;
+    font-size: 24px;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+}
+.accordion ul li div a .tarjetas p {
+    font-size: 16px;
+}
+.accordion ul li:nth-child(1) {
+    background-image: url("../img/home-1.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 70% 50%;
+}
+.accordion ul li:nth-child(2) {
+    background-image: url("../img/home-2.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 30%;
+}
+.accordion ul li:nth-child(3) {
+    background-image: url("../img/home-3.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 70%;
+}
+.accordion ul:hover li,
+.accordion ul:focus-within li {
+    width: 10%;
+}
+.accordion ul li:focus {
+    outline: none;
+}
+.accordion ul:hover li:hover,
+.accordion ul li:focus,
+.accordion ul:focus-within li:focus {
+    width: 60%;
+}
+.accordion ul:hover li:hover a *,
+.accordion ul li:focus a *,
+.accordion ul:focus-within li:focus a * {
+    opacity: 1;
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+}
+.accordion ul:hover li {
+    width: 10% !important;
+}
+.accordion ul:hover li a * {
+    opacity: 0 !important;
+}
+.accordion ul:hover li:hover {
+    width: 60% !important;
+}
+.accordion ul:hover li:hover a * {
+    opacity: 1 !important;
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+}
+.accordion .footer {
+    width: 800px;
+    height: 50px;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    border-radius: 30px;
+    bottom: 20px;
+    left: calc((100vw - 800px) / 2);
+    background: linear-gradient(
+        198.35deg,
+        #ffffff 31.67%,
+        rgba(255, 255, 255, 0.6) 87.55%
+    );
+    backdrop-filter: blur(4px);
+    text-align: center;
+    z-index: 99;
+}
+.accordion .footer p {
+    font-family: "Open Sans", sans-serif;
+    font-size: 16px;
+}
+@media screen and (max-width: 800px) {
+    body {
+        margin: 0;
+    }
+    .accordion {
+        width: calc(100vw - 40px);
+        height: auto;
+        margin-bottom: 20px;
+        border-radius: 30px !important;
+    }
+    .accordion .header {
+        width: calc(100% - 40px);
+        height: auto;
+        left: 0;
+        top: 0;
+        margin-left: 20px;
+        border-radius: 30px;
+    }
+    .accordion ul {
+        margin-top: 120px;
+    }
+    .accordion ul li,
+    .accordion ul:hover li,
+    .accordion ul li:hover,
+    .accordion ul:hover li:hover {
+        position: relative;
+        display: table;
+        table-layout: fixed;
+        width: 100%;
+        -webkit-transition: none;
+        transition: none;
+    }
+    .accordion ul:hover li {
+        width: 100% !important;
+    }
+    .accordion ul:hover li:hover {
+        width: 100% !important;
+    }
+    .accordion ul li div a {
+        display: flex;
+        justify-content: center;
+        height: calc((100vh - 200px) / 3) !important ;
+    }
+    .accordion ul li div a * {
+        opacity: 1;
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+    }
+    .accordion ul li div a .tarjetas {
+        width: auto;
+        min-width: 250px;
+        margin-bottom: 10px !important;
+        margin-left: 0 !important;
+        text-align: center;
+        padding: 5px 10px !important;
+    }
+    .accordion ul li div a .tarjetas h2 {
+        font-size: 16px;
+    }
+    .accordion ul li div a .tarjetas p {
+        display: none;
+        font-size: 14px;
+    }
+    .accordion ul li div a .tarjetas:hover {
+        transform: scale(1);
+    }
+    .accordion ul li div a .tarjetas h1 {
+        font-size: 16px;
+    }
+    .accordion ul li div a .card-mobile {
+        display: none;
+    }
+    .accordion ul li:nth-child(1) {
+        background-image: url("../img/home-1.png");
+        background-position: top;
+        border-top-right-radius: 30px;
+        border-top-left-radius: 30px;
+    }
+    .accordion ul li:nth-child(2) {
+        background-image: url("../img/home-2.jpg");
+        background-position: 50% 20%;
+    }
+    .accordion ul li:nth-child(3) {
+        background-image: url("../img/home-3.png");
+    }
+    .accordion .footer {
+        width: 100%;
+        bottom: 0 !important;
+        left: 0 !important;
+    }
+    .accordion .footer p {
+        font-size: 14px;
+    }
+}

@@ -46,55 +46,6 @@ class GestionOperadoresController extends Controller
     public function store(Request $request)
     {
 
-        $moduloId = $request->modulo;
-        if ($moduloId == 'Seleccione un modulo') {
-            Session::flash('error', 'Seleccione un Modulo Valido');
-            return redirect()->back()->withInput();;
-        }
-
-        // Validar que el email no esté registrado en la base de datos
-        $existingUserEmail = User::where('email', $request->email)->first();
-        if ($existingUserEmail) {
-        Session::flash('error', 'Email ya Registrado');
-        return redirect()->back()->withInput();;
-        }
-
-        // Validar que la contraseña no esté en uso
-        $existingUserPassword = User::where('password', bcrypt($request->password))->first();
-        if ($existingUserPassword) {
-            Session::flash('error', 'Contraseña corresponde a otro Usuario');
-            return redirect()->back()->withInput();;
-        }
-
-        // Crear un nuevo usuario
-       
-        if ($request->password == $request->password_confirmation) {
-            $user = new User();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = bcrypt($request->password);
-        $user->save();
-
-        // Asignar un módulo al usuario
-        $modulo = Modulo::find($moduloId);
-        $model = new Model_has_role();
-        $nombreRol = 'Operador';
-        $roles = Role::where('name', $nombreRol)->get();
-        if ($modulo) {
-            $modulo->user_id = $user->id;
-            $modulo->save();
-
-            $user->assignRole('Operador');
-        }
-
-        
-        Session::flash('success', 'Registro Exitoso');
-        return redirect()->back();
-
-        } else {
-        Session::flash('error', 'Las contraseñas no coinciden');
-        return redirect()->back()->withInput();
-        }
         
     }
 

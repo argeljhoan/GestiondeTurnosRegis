@@ -6,21 +6,32 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
+    <link rel="stylesheet" href="{{ asset('css/inicio.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/landing.css') }}">
     <title>Sistema de Gestion de Turnos</title>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
-
+  
+ 
+    
     <!-- Scripts -->
+    <script  async=""   src= "{{asset('images/js"')}} " > </script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'G-RYQ32W3PHF');
+    </script>
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand" >
                 Sistema de Gestion de Turnos
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -39,7 +50,7 @@
 
                           
                         <li class="nav-item active">
-                            <a class="nav-link" href="#">Inicio <span class="sr-only"></span></a>
+                            <a class="nav-link" href="{{ route('admin.home') }}">Inicio <span class="sr-only"></span></a>
                           </li>
                           <li class="nav-item">
                             <a class="nav-link" href="{{ route('admin.Seguimiento') }}">Seguimiento</a>

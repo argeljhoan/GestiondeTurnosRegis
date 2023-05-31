@@ -108,7 +108,8 @@ class RegisterOperadorController extends Controller
         $usuario = Modulo::where('user_id', $user->id)->first();
         $user->modulo = $usuario->nameModulo;
 
-        return view('SuperAdmin.EditarOperadores', compact('user'));
+       // return $usuario;
+       return view('SuperAdmin.EditarOperadores', compact('user'));
     }
 
     /**
@@ -187,6 +188,8 @@ class RegisterOperadorController extends Controller
 
     public function destroy(User $user)
     {
+        
+        $user->modulos()->update(['user_id' => null]);
         $user->delete();
         return redirect()->route('admin.Gestion');
     }

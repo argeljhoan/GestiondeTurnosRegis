@@ -60,6 +60,9 @@
                             {{-- <a class="nav-link" href="#">Gestion De Operadores</a> --}}
                           </li>
                           <li class="nav-item">
+                            <a class="nav-link" href="{{ route('Modulos.Gestion') }}">Gestion de Modulos</a>
+                          </li>
+                          <li class="nav-item">
                             <a class="nav-link" href="{{ route('admin.Gestion') }}">Solicitar Turno</a>
                           </li>
                           

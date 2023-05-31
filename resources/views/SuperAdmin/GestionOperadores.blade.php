@@ -21,9 +21,7 @@
         </td>
       </tr>
 </table>        
-
-
-  <table class="table   border-primary">
+<table class="table   border-primary">
                   <thead class="table-primary">
                       <tr>
                           <th>Id</th>
@@ -70,11 +68,8 @@
                       
                       </tr>
                       @endforeach
-                      <tbody>
-                      
+                      <tbody>     
               </table>
-              
-
 </section>
 
 @endsection

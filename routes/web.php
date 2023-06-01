@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\GestionOperadoresController;
 use App\Http\Controllers\Admin\RegisterOperadorController;
 use App\Http\Controllers\Admin\SeguimientoController;
 use App\Http\Controllers\Modulos\ModulosController;
+use App\Http\Controllers\Tramites\TramiteController;
 USE App\Http\Controllers\HomeController;
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +45,15 @@ Route::get('/Editar-Modulos/{moduloData}', [ModulosController::class,'edit'])->n
 Route::put('/Actualizar-Modulos/{modulo}', [ModulosController::class,'update'])->name('Modulos.Actualizar');
 Route::delete('Eliminar-Modulo/{modulo}', [ModulosController::class,'destroy'])->name('Modulos.Eliminando');
 Route::get('Eliminar-Modulo/{modulo}', [ModulosController::class,'eliminando'])->name('Modulos.Eliminar');
+
+Route::get('/Gestion-Tramites', [TramiteController::class,'index'])->name('Tramites.Gestion');
+Route::get('/Registro-Tramite', [TramiteController::class,'create'])->name('Tramites.Registrar');
+Route::post('/Registro-Tramite', [TramiteController::class,'store'])->name('Tramites.store');
+Route::get('/Editar-Tramite/{tramite}', [TramiteController::class,'edit'])->name('Tramites.Editar');
+Route::put('/Actualizar-Tramite/{tramite}', [TramiteController::class,'update'])->name('Tramites.Actualizar');
+Route::get('Eliminar-Tramite/{tramite}', [TramiteController::class,'eliminando'])->name('Tramites.Eliminar');
+Route::delete('Eliminando-Tramite/{tramite}', [TramiteController::class,'destroy'])->name('Tramites.Eliminando');
+
 
 
 Route::get('SuperAdmin/Seguimiento', [SeguimientoController::class,'index'])->name('admin.Seguimiento');  

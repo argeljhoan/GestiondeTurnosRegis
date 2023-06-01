@@ -225,7 +225,7 @@ class ModulosController extends Controller
 
 
 
-        return $this->index();
-        //return view('Modulos.Eliminar',compact('modulo'));
+        return redirect()->route('Modulos.Gestion');
+        
     }
 }

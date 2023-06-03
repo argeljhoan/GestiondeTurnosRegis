@@ -223,8 +223,6 @@ class ModulosController extends Controller
             $modulo->delete();
         }
 
-
-
         return redirect()->route('Modulos.Gestion');
         
     }

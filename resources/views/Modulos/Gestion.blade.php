@@ -3,8 +3,8 @@
 
 @section('content1')
 
-<div class="container">
-    <div class="row">
+<div class="container  table-hover">
+    <div class="row " >
         @foreach ($modulosData as $moduloData)
         <div class="col-md-3 mt-3">
             <div class="card" style="height: 300px; overflow-y: auto;">
@@ -70,4 +70,19 @@
             </tr>
         </table>     
     </div>
+@endsection
+@section('scripts')
+
+<script>
+    $(document).ready(function() {
+      // Selecciona el elemento con la clase 'dropdown-toggle' y agrega el evento de clic
+      $('.dropdown-toggle').click(function() {
+        // Obtiene el menú desplegable asociado al elemento clicado
+        var dropdownMenu = $(this).next('.dropdown-menu');
+  
+        // Verifica si el menú está oculto o visible y lo alterna
+        dropdownMenu.toggle();
+      });
+    });
+  </script>
 @endsection

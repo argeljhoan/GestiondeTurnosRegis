@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\RegisterOperadorController;
 use App\Http\Controllers\Admin\SeguimientoController;
 use App\Http\Controllers\Modulos\ModulosController;
 use App\Http\Controllers\Tramites\TramiteController;
+use App\Http\Controllers\Turnos\TurnoController;
 USE App\Http\Controllers\HomeController;
 /*
 |--------------------------------------------------------------------------
@@ -54,6 +55,11 @@ Route::put('/Actualizar-Tramite/{tramite}', [TramiteController::class,'update'])
 Route::get('Eliminar-Tramite/{tramite}', [TramiteController::class,'eliminando'])->name('Tramites.Eliminar');
 Route::delete('Eliminando-Tramite/{tramite}', [TramiteController::class,'destroy'])->name('Tramites.Eliminando');
 
+Route::get('/Gestion-Turnos', [TurnoController::class,'index'])->name('Turnos.Gestion');
+Route::post('/Gestion-Turnos', [TurnoController::class,'show'])->name('Turnos.Buscar');
+Route::get('/Su-Turno', [TurnoController::class,'create'])->name('Turnos.Registrar');
+Route::post('/Generar-Turnos', [TurnoController::class,'generar'])->name('Turnos.Generar');
+Route::post('Registro-Turnos/{cita}', [TurnoController::class, 'store'])->name('Turnos.store');
 
 
 Route::get('SuperAdmin/Seguimiento', [SeguimientoController::class,'index'])->name('admin.Seguimiento');  

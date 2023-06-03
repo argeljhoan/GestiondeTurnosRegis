@@ -21,7 +21,7 @@
         </td>
       </tr>
 </table>        
-<table class="table   border-primary">
+<table class="table   border-primary table-hover">
                   <thead class="table-primary">
                       <tr>
                           <th>Id</th>
@@ -71,5 +71,10 @@
                       <tbody>     
               </table>
 </section>
+
+@endsection
+
+@section('scripts')
+
 
 @endsection

@@ -65,9 +65,18 @@
                           <li class="nav-item">
                             <a class="nav-link" href="{{ route('Tramites.Gestion') }}">Gestion de Tramites</a>
                           </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="{{ route('admin.Gestion') }}">Solicitar Turno</a>
-                          </li>
+
+                           <li class="nav-item dropdown">
+                             <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              Gestion de Turnos
+                                  </a>
+                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                               <a class="dropdown-item" href="{{ route('Turnos.Gestion') }}">Buscar</a>
+                             <a class="dropdown-item" href="{{ route('Turnos.Registrar') }}">Solicitar Turno</a>
+                             {{--<div class="dropdown-divider"></div>
+                              <a class="dropdown-item" href="#">Otros Servicios</a>
+                                 </div>--}}
+                                 </li>
                           
                           <li class="nav-item">
                             <a class="nav-link" href="{{ route('admin.Gestion') }}">Informes</a>
@@ -116,5 +125,20 @@
     </div>
     
     @yield('scripts')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+  $(document).ready(function() {
+    // Selecciona el elemento con la clase 'dropdown-toggle' y agrega el evento de clic
+    $('.dropdown-toggle').click(function() {
+      // Obtiene el menú desplegable asociado al elemento clicado
+      var dropdownMenu = $(this).next('.dropdown-menu');
+
+      // Verifica si el menú está oculto o visible y lo alterna
+      dropdownMenu.toggle();
+    });
+  });
+</script>
 </body>
 </html>

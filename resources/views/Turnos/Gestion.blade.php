@@ -10,17 +10,20 @@
       <tr>
         <td>
           <div class="button1">
+            @can('Modulos.Gestion')
             <a class="btn btn-primary" href="{{ route('Modulos.Gestion') }}">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
                 <path d="M8 2a6 6 0 0 0-6 6c0 1.608.784 3.093 2.086 4.003C3.15 12.112 5.16 13 8 13c2.84 0 4.85-.888 5.914-2.997C13.216 11.094 14 9.609 14 8a6 6 0 0 0-6-6zm0 10c-1.691 0-3.203-.81-4.177-2.077A17.8 17.8 0 0 1 2 8a17.8 17.8 0 0 1 1.823-1.923C4.797 4.81 6.309 4 8 4c1.691 0 3.203.81 4.177 2.077A17.8 17.8 0 0 1 14 8a17.8 17.8 0 0 1-1.823 1.923C11.203 11.19 9.691 12 8 12zm0-7a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z" />
               </svg> Ver Modulos
             </a>
+            @endcan
           </div>
         </td>
       </tr>
     </table>
   
     <!-- Search form -->
+    @can('Turnos.Buscar')
     <div class="container center">
       <div class="row">
         <div class="col-sm-8 offset-sm-2">
@@ -56,7 +59,7 @@
         @endif
       </div>
     </div>
-  
+  @endcan
     <!-- Appointments table -->
     <table class="table border-primary mt-5 table-hover">
       <thead class="table-primary">

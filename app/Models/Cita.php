@@ -12,6 +12,23 @@ class Cita extends Model
     protected $table = 'citas';
 
 
+    protected $fillable = [
+        'fechaCita',
+        'hora',
+        'numerocitas',
+        'nombre',
+        'apellido',
+        'documento',
+        'identificacion',
+        'idTramite',
+        'idestado',
+        
+
+    ];
+
+
+
+
     public function turnos()
 {
     return $this->hasMany(Turno::class, 'idcita');

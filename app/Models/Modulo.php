@@ -27,8 +27,14 @@ class Modulo extends Model
 
     public function modulo_tramite()
     {
-        return $this->hasMany(Modulo_Tramite::class);
+        return $this->hasMany(Modulo_Tramite::class,'id_modulo');
     }
+
+
+    public function turnos()
+{
+    return $this->hasMany(Turno::class, 'idmodulo');
+}
 
     protected function name():Attribute{
 

@@ -8,6 +8,7 @@ use App\Http\Controllers\Modulos\ModulosController;
 use App\Http\Controllers\Tramites\TramiteController;
 use App\Http\Controllers\Turnos\TurnoController;
 USE App\Http\Controllers\HomeController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,14 +26,14 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/SuperAdmin', [HomeController::class, 'index'])->name('admin.home');
+Route::get('/Inicio', [HomeController::class, 'index'])->name('admin.home');
 
-Route::get('/GestionOperadores', [GestionOperadoresController::class,'index'])->name('admin.Gestion');
-Route::get('/Registro-Operadores', [GestionOperadoresController::class,'create'])->name('admin.Registro');
+Route::get('/Gestion-Operadores', [GestionOperadoresController::class,'index'])->name('admin.Gestion');
 
 
-Route::get('/Registro-Operadores', [RegisterOperadorController::class,'index'])->name('admin.Registro');
-Route::post('/GestionOperadores', [RegisterOperadorController::class,'store'])->name('admin.store');
+Route::get('/Registro-Operadores', [RegisterOperadorController::class,'create'])->name('admin.Registro');
+Route::get('/Registro-Operadores', [RegisterOperadorController::class,'index'])->name('admin.modulo');
+Route::post('/Gestion-Operadores', [RegisterOperadorController::class,'store'])->name('admin.store');
 Route::get('/Editar-Operadores/{user}', [RegisterOperadorController::class,'edit'])->name('admin.Editar');
 Route::put('/GestionOperadores/{user}', [RegisterOperadorController::class,'update'])->name('admin.Actualizar');
 Route::delete('GestionOperadores/{user}', [RegisterOperadorController::class,'destroy'])->name('admin.Eliminar');
@@ -60,6 +61,15 @@ Route::post('/Gestion-Turnos', [TurnoController::class,'show'])->name('Turnos.Bu
 Route::get('/Su-Turno', [TurnoController::class,'create'])->name('Turnos.Registrar');
 Route::post('/Generar-Turnos', [TurnoController::class,'generar'])->name('Turnos.Generar');
 Route::post('Registro-Turnos/{cita}', [TurnoController::class, 'store'])->name('Turnos.store');
-
+Route::get('/Cargar-Citas', [TurnoController::class,'cargar'])->name('Turnos.Cargar');
+Route::post('Cargar/Citas', [TurnoController::class, 'excel'])->name('Turnos.CargarExcel'); 
+Route::get('Gestion-Turnos/Operadores/{id}', [TurnoController::class, 'citastabla'])->name('Turnos.Operadores'); 
+Route::get('Gestion-Turnos/Atencion/{id}/{cita}', [TurnoController::class, 'atencion'])->name('Turnos.Atencion');
+Route::get('Gestion-Turnos/Usuario/{cita}/{id}', [TurnoController::class, 'info'])->name('Turnos.info');
+Route::post('Gestion-Turnos/Finalizar/{turno}', [TurnoController::class, 'guardarTiempoTranscurrido'])->name('Turnos.Tiempo');
+Route::put('/Finalizar/Turno/{turno}', [TurnoController::class,'update'])->name('Turnos.Actualizar');
+Route::get('Gestion-Turnos/Visualizar', [TurnoController::class,'visualizar'])->name('Turnos.Visualizar');
+Route::get('Gestion-Turnos/Cedulas-Digitales', [TurnoController::class,'digital'])->name('Turnos.Digital');
+Route::post('Gestion-Turnos/Cedulas-Digitales', [TurnoController::class, 'digitalstore'])->name('Turnos.CitasDigital');
 
 Route::get('SuperAdmin/Seguimiento', [SeguimientoController::class,'index'])->name('admin.Seguimiento');  

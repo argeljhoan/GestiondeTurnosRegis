@@ -31,7 +31,7 @@ class RegisterOperadorController extends Controller
      */
     public function create()
     {
-        //
+        return view('SuperAdmin.RegistroOperadores');
     }
 
     /**

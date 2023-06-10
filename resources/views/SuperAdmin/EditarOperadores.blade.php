@@ -81,14 +81,15 @@
                        </div>
                      @endif
 
-
-                        <div class="row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Actualizar') }}
-                                </button>
-                            </div>
-                        </div>
+                     @can('admin.Actualizar')
+                     <div class="row mb-0">
+                         <div class="col-md-6 offset-md-4">
+                             <button type="submit" class="btn btn-primary">
+                                 {{ __('Actualizar') }}
+                             </button>
+                         </div>
+                     </div>
+                 @endcan
                     </form>
                 </div>
             </div>

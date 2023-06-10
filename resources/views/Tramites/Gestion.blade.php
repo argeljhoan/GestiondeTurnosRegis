@@ -9,6 +9,7 @@
 
     <table class="table  ">
       <tr>
+        @can('Tramites.Registrar')
         <td>
           <div class="button1"> 
             <a class="btn btn-primary" href="{{ route('Tramites.Registrar') }}">
@@ -19,6 +20,7 @@
             </a>                
           </div>
         </td>
+        @endcan
       </tr>
 </table>        
 <table class="table   border-primary table-hover">
@@ -26,9 +28,12 @@
                       <tr>
                           <th>Id</th>
                           <th>Tramite</th>
+                          @can('Tramites.Editar')
                           <th>Editar</th>
+                          @endcan
+                          @can('Tramites.Eliminar')
                           <th>Eliminar</th>
-                          
+                          @endcan
                       </tr>
                   </thead>
                   <tbody>
@@ -36,7 +41,9 @@
                       <tr>
                         <td>{{$tramite ->id}}</td>
                         <td>{{$tramite ->name}}</td>
+                        @can('Tramites.Editar')
                         <td>
+                            
                             <div class="button">
                               <a class="btn btn-warning" href="{{ route('Tramites.Editar', ['tramite' => $tramite->id]) }}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
@@ -45,9 +52,13 @@
                               </svg>
                               </a>
                             </div>
+                            
                         </td>
+                        @endcan
+                        @can('Tramites.Eliminar')
                         <td>
-
+                      
+                            
                             <div  class="button" >
                               <a class="btn btn-danger" href="{{ route('Tramites.Eliminar', ['tramite' => $tramite->id]) }}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
@@ -56,8 +67,9 @@
                                 </svg>
                               </a>
                             </div>
+                       
                         </td>
-                      
+                        @endcan
                       </tr>
                       @endforeach
                      

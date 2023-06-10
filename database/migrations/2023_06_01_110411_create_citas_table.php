@@ -16,12 +16,12 @@ return new class extends Migration
         Schema::create('citas', function (Blueprint $table) {
             $table->id();
             $table->date('fechaCita')->nullable();
-            $table->string('hora', 100);
+            $table->time('hora')->nullable();
             $table->unsignedBigInteger('numerocitas')->nullable();
-            $table->string('nombre', 100);
-            $table->string('apellido', 100);
-            $table->string('documento', 100);
-            $table->unsignedBigInteger('identificacion')->unique();
+            $table->string('nombre', 100)->nullable();
+            $table->string('apellido', 100)->nullable();
+            $table->string('documento', 100)->nullable();
+            $table->unsignedBigInteger('identificacion')->unique()->nullable();
             $table->unsignedBigInteger('idTramite')->nullable();
             $table->unsignedBigInteger('idestado')->nullable();
             $table->foreign('idTramite')

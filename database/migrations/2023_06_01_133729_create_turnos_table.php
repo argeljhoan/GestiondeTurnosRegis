@@ -16,7 +16,13 @@ return new class extends Migration
         Schema::create('turnos', function (Blueprint $table) {
             $table->id();
             $table->string('name',100);
+            $table->time('atencion')->nullable();
             $table->unsignedBigInteger('idcita')->nullable();
+            $table->unsignedBigInteger('idmodulo')->nullable();
+            $table->foreign('idmodulo')
+            ->references('id')
+            ->on('modulos')
+            ->onDelete('cascade');
             $table->foreign('idcita')
             ->references('id')
             ->on('citas')

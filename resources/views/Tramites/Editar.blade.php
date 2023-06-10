@@ -40,7 +40,7 @@
                            </div>
                          @endif
                         </div>
-
+                   @can('Tramites.Actualizar')
                         <div class=" row mt-5">
                             <div class="col-md-8 ">
                                 <button type="submit" class="btn btn-primary">
@@ -48,6 +48,7 @@
                                 </button>
                             </div>
                         </div>
+                        @endcan
                     </form>
                 </div>
             </div>

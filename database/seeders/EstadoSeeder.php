@@ -21,7 +21,9 @@ class EstadoSeeder extends Seeder
         $names=[
         'Sin Turno',
         'Con Turno',
-        'Atendido'
+        'Atendiendo',
+        'Atendido',
+        'No Gestiono'
         ];
         foreach ($names as $name) {
             Estado::create([

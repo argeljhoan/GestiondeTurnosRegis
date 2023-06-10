@@ -13,12 +13,21 @@ class Turno extends Model
     protected $fillable = [
         'name',
         'idcita',
+        'idmodulo',
     ];
 
     public function cita()
     {
-        return $this->belongsTo(Cita::class);
+        return $this->belongsTo(Cita::class,'idcita');
     }
+
+
+    public function modulo()
+    {
+        return $this->belongsTo(Modulo::class,'idmodulo');
+    }
+
+
 
     protected function name():Attribute{
 

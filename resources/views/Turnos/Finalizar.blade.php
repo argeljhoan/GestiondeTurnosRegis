@@ -7,32 +7,30 @@
         <div class="col-md-8 offset-md-2">
             <div class="card">
                 <div class="card-header">
-                    Confirmar eliminación
+                    Confirmar Finalizacion
                 </div>
                 <div class="card-body">
-                    <p>¿Estás seguro de que deseas eliminar este Operador?</p>
-                    <p><strong>Nombre:</strong> {{ $user->name }}</p>
-                    <p><strong>Email:</strong> {{ $user->email }}</p>
-                    @can('admin.Eliminar')
-                    <form action="{{ route('admin.Eliminar', $user) }}" method="POST">
+                    <p>¿Estás seguro de Finalizar el Proceso?</p>
+                    <p><strong>Turno:</strong> {{ $turno->name }}</p>
+                    <p><strong>Nombre:</strong> {{ $turno->cita->nombre }}</p>
+                    <p><strong>Apellido:</strong> {{ $turno->cita->apellido }}</p>
+                    
+                    <form action="{{ route('Turnos.Actualizar', $turno) }}" method="POST">
                         @csrf
-                        @method('delete')
+                        @method('put')
 
                         <div class="d-flex flex-row gap-3 ">
-                            <button type="submit" class="btn btn-danger  ">Eliminar</button>
-                            <a href="{{ route('admin.Gestion') }}" class="btn btn-secondary">Cancelar</a>
+                            <button type="submit" class="btn btn-primary  "name="accion" value="finalizado">Finalizar</button>
+                            <a href="{{ route('Turnos.Atencion',['id' => Auth::user()->id, 'cita' => '0'])}}" class="btn btn-secondary">Cancelar</a>
                         </div>
 
                     </form>
-                    @endcan
+                  
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-
-
 
 @endsection
 @section('scripts')

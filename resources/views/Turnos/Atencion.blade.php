@@ -123,57 +123,7 @@
 @endif
 
   
-    <!-- Pagination -->
-    <div class="pagination justify-content-end">
-        <nav>
-          <ul class="pagination">
-            @if ($citas->lastPage() > 1)
-            {{-- Flecha "Anterior" --}}
-            @if ($citas->onFirstPage())
-            <li class="page-item disabled">
-              <span class="page-link" aria-label="Anterior">
-                <span aria-hidden="true">&laquo;</span>
-              </span>
-            </li>
-            @else
-            <li class="page-item">
-              <a class="page-link" href="{{ $citas->previousPageUrl() }}" aria-label="Anterior">
-                <span aria-hidden="true">&laquo;</span>
-              </a>
-            </li>
-            @endif
     
-            {{-- Números de página --}}
-            @for ($i = 1; $i <= $citas->lastPage(); $i++)
-            @if ($citas->currentPage() == $i)
-            <li class="page-item active">
-              <span class="page-link">{{ $i }}</span>
-            </li>
-            @else
-            <li class="page-item">
-              <a class="page-link" href="{{ $citas->url($i) }}">{{ $i }}</a>
-            </li>
-            @endif
-            @endfor
-    
-            {{-- Flecha "Siguiente" --}}
-            @if ($citas->hasMorePages())
-            <li class="page-item">
-              <a class="page-link" href="{{ $citas->nextPageUrl() }}" aria-label="Siguiente">
-                <span aria-hidden="true">&raquo;</span>
-              </a>
-            </li>
-            @else
-            <li class="page-item disabled">
-              <span class="page-link" aria-label="Siguiente">
-                <span aria-hidden="true">&raquo;</span>
-              </span>
-            </li>
-            @endif
-            @endif
-          </ul>
-        </nav>
-      </div>
 </section>
 @endsection
 @section('scripts')

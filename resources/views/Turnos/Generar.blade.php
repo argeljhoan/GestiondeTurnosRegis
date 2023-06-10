@@ -14,7 +14,7 @@
                        
                         <div class="container mt-5">
                             <div class="text-center">
-                                <img  src='images/logo.black.svg' style="width: 500px">
+                                <img  src='/images/regis.jpg' style="width: 500px">
                                 <p class="mt-2">Bienvenido a la Registraduría Especial de Cúcuta</p>
                                 <p>Turno<strong id="turno">{{$cita->codigo}} </strong></p>
                                 <p>Fecha de impresión: <span id="fecha">{{$cita->impresion}} </span></p>

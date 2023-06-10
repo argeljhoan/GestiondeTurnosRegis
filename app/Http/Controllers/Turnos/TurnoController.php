@@ -22,20 +22,15 @@ class TurnoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+{
+    $fechaActual = Carbon::now()->format('Y-m-d');
 
+    $citas = Cita::whereDate('fechaCita', $fechaActual)
+        ->with('tramite', 'turnos', 'estado')
+        ->paginate(10);
 
-        $fechaActual = Carbon::now()->format('d-M-y');
-        $fechaFormateada = strtolower($fechaActual);
-
-        $citas = Cita::whereRaw("DATE_FORMAT(fechacita, '%d-%b-%y') = ?", [$fechaActual])
-            ->with('tramite', 'turnos', 'estado')
-            ->paginate(10);
-
-
-
-        return view('Turnos.Gestion', compact('citas'));
-    }
+    return view('Turnos.Gestion', compact('citas'));
+}
     /**
      * Show the form for creating a new resource.
      *
@@ -49,93 +44,88 @@ class TurnoController extends Controller
     public function citastabla($id)
     {
 
-
         $fechaActual = Carbon::now()->format('Y-m-d');
         $tramites = Modulo::where('user_id', $id)->with('modulo_tramite')->get();
-
-
+        $citas = collect(); // Crear una colección vacía
+        
         foreach ($tramites as $tramite) {
-
             $idtramites = $tramite->modulo_tramite;
-
+        
             foreach ($idtramites as $idtramite) {
-
                 $id = $idtramite->id_tramite;
-
-                $citas = Cita::where('idTramite', $id)
+                $citasTramite = Cita::where('idTramite', $id)
                     ->where('fechaCita', $fechaActual)
                     ->with('tramite', 'turnos', 'estado')
                     ->paginate(10);
-                return view('Turnos.Operadores', compact('citas'));
+                $citas = $citas->concat($citasTramite); // Agregar los resultados a la colección $citas
             }
         }
+     
+      // return $citas;
+    return view('Turnos.Operadores', compact('citas'));
     }
 
     public function atencion($id, $cita)
     {
-
         $fechaActual = Carbon::now()->format('Y-m-d');
         $tramites = Modulo::where('user_id', $id)->with('modulo_tramite')->get();
-
+    
+        $citas = collect(); // Crear una colección vacía
+        $info = null;
+    
         foreach ($tramites as $tramite) {
-
             $idtramites = $tramite->modulo_tramite;
-
+    
             foreach ($idtramites as $idtramite) {
-
                 $idt = $idtramite->id_tramite;
-
-                $citas = Cita::where('idTramite', $idt)
+    
+                $citasTramite = Cita::where('idTramite', $idt)
                     ->where('fechaCita', $fechaActual)
-                    ->where('idEstado', 2) // Agregar esta cláusula para filtrar por idEstado igual a 2
+                    ->where('idEstado', 2)
                     ->with('tramite', 'turnos', 'estado')
-                    ->paginate(10);
-
-
-                if ($cita == '0') {
-
-                    $citasAtendiendo = Turno::where('idmodulo', $tramite->id)
-                        ->whereHas('cita', function ($query) {
-                            $query->where('idestado', 3);
-                        })->with('cita')
-                        ->get();
-
-                    if (!$citasAtendiendo->isEmpty()) {
-                        foreach ($citasAtendiendo as $atendiendo) {
-                            $info = new Turno();
-                            $info->id = $atendiendo->id;
-                            $info->nombre = $atendiendo->cita->nombre;
-                            $info->apellido = $atendiendo->cita->apellido;
-                            $info->identificacion = $atendiendo->cita->identificacion;
-                            $info->turno = $atendiendo->name;
-                            $tiempos = Turno::where('idcita', $atendiendo->cita->id)->get();
-
-                            foreach ($tiempos  as $tiempo) {
-
-                                $info->tiempo = $tiempo->atencion;
-                            }
-                        }
-                    } else {
-                        $info = '';
-                    }
-                } elseif ($cita == '1') {
-
-                    $info = '';
-                } else {
-                    $info = $cita;
-                }
-
-
-                return view('Turnos.Atencion', compact('citas', 'id', 'info'));
+                    ->get();
+    
+                $citas = $citas->concat($citasTramite); // Agregar los resultados a la colección $citas
             }
         }
+    
+        if ($cita == '0') {
+            $citasAtendiendo = Turno::where('idmodulo', $tramite->id)
+                ->whereHas('cita', function ($query) {
+                    $query->where('idestado', 3);
+                })->with('cita')
+                ->get();
+    
+            if (!$citasAtendiendo->isEmpty()) {
+                foreach ($citasAtendiendo as $atendiendo) {
+                    $info = new Turno();
+                    $info->id = $atendiendo->id;
+                    $info->nombre = $atendiendo->cita->nombre;
+                    $info->apellido = $atendiendo->cita->apellido;
+                    $info->identificacion = $atendiendo->cita->identificacion;
+                    $info->turno = $atendiendo->name;
+                    $tiempos = Turno::where('idcita', $atendiendo->cita->id)->get();
+    
+                    foreach ($tiempos as $tiempo) {
+                        $info->tiempo = $tiempo->atencion;
+                    }
+                }
+            } else {
+                $info = '';
+            }
+        } elseif ($cita == '1') {
+            $info = '';
+        } else {
+            $info = $cita;
+        }
+    
+        return view('Turnos.Atencion', compact('citas', 'id', 'info'));
     }
 
 
     public function info(Cita $cita, $id)
     {
         $modulos = Modulo::where('user_id', $id)->get();
-
 
         foreach ($modulos as $modulo) {
             $cita->idestado = 3;
@@ -145,15 +135,34 @@ class TurnoController extends Controller
                 $turno->atencion = '00:00:00';
                 $turno->save();
                 $cita->save();
-
+    
                 $info = new Turno();
                 $info->id = $turno->id;
                 $info->nombre = $cita->nombre;
                 $info->apellido = $cita->apellido;
                 $info->identificacion = $cita->identificacion;
                 $info->turno = $turno->name;
-
-                return $this->atencion($id, $info);
+    
+                // Devolver la respuesta directamente en lugar de llamar a la función atencion()
+                $fechaActual = Carbon::now()->format('Y-m-d');
+                $tramites = Modulo::where('user_id', $id)->with('modulo_tramite')->get();
+                $citas = collect(); // Crear una colección vacía
+    
+                foreach ($tramites as $tramite) {
+                    $idtramites = $tramite->modulo_tramite;
+                    foreach ($idtramites as $idtramite) {
+                        $idt = $idtramite->id_tramite;
+                        $citasTramite = Cita::where('idTramite', $idt)
+                            ->where('fechaCita', $fechaActual)
+                            ->where('idEstado', 2)
+                            ->with('tramite', 'turnos', 'estado')
+                            ->get();
+                        $citas = $citas->concat($citasTramite); // Agregar los resultados a la colección $citas
+                    }
+                }
+    
+                $cita = '0';
+                return view('Turnos.Atencion', compact('citas', 'id', 'info'));
             }
         }
     }
@@ -191,31 +200,28 @@ class TurnoController extends Controller
     public function store(Cita $cita)
     {
         $fechaActual = Carbon::now()->format('d-M-y H:i:s');
-        $citas = Cita::where('identificacion', $cita->identificacion)
+        $identificacion = $cita->identificacion;
+    
+        $citas = Cita::where('identificacion', $identificacion)
             ->with('tramite', 'turnos', 'estado')
             ->get();
-
+    
         foreach ($citas as $cita) {
-
             $primerCaracter = $cita->tramite->name[0];
             $turno = Turno::whereRaw("SUBSTRING(name, 1, 1) = ?", $primerCaracter)->latest()->first();
-            if ($turno) {
-                $count = substr($turno->name, 1, 2);
-                $codigo = $turno->name[0] . ($count + 1);
-            } else {
-
-                $codigo = $primerCaracter . '1';
-            }
-
+            
+            $count = $turno ? substr($turno->name, 1, 2) : 0;
+            $codigo = $primerCaracter . ($count + 1);
+    
             $cita->idestado = 2;
             $cita->save();
-
+    
             $turnoasignado = Turno::create([
                 'name' => $codigo,
-                'idcita' =>  $cita->id,
+                'idcita' => $cita->id,
             ]);
         }
-
+    
         Session::flash('success', 'Turno Asignado Correctamente');
         return redirect()->route('Turnos.Registrar');
     }
@@ -229,66 +235,61 @@ class TurnoController extends Controller
     public function show(Request $request)
     {
 
-        $citas = Cita::where('identificacion', $request->name)
-            ->with('tramite', 'turnos', 'estado')
-            ->paginate(10);
+        $identificacion = $request->name;
 
-        foreach ($citas as $cita) {
+    $citas = Cita::where('identificacion', $identificacion)
+        ->with('tramite', 'turnos', 'estado')
+        ->paginate(10);
 
-            if ($cita) {
-
-                Session::flash('success', 'Busqueda Exitosa');
-                return view('Turnos.Gestion', compact('citas'));
-            }
-        }
-
+    if ($citas->isEmpty()) {
         Session::flash('error', 'No tiene cita asignada');
         return redirect()->route('Turnos.Gestion');
+    }
+
+    Session::flash('success', 'Búsqueda Exitosa');
+    return view('Turnos.Gestion', compact('citas'));
     }
 
 
     public function generar(Request $request)
     {
 
-  
         $fechaActual = Carbon::now()->format('Y-m-d');
         $horaActual = Carbon::now()->subMinutes(6)->format('H:i:s');
-
-        $citas = Cita::where('identificacion', $request->name)
+        $identificacion = $request->name;
+    
+        $citas = Cita::where('identificacion', $identificacion)
             ->whereDate('fechaCita', $fechaActual)
             ->whereTime('hora', '>', $horaActual)
             ->with('tramite', 'turnos', 'estado')
             ->get();
-
-
-        if ($citas->isNotEmpty()) {
-
-            foreach ($citas as $cita) {
-
-                if ($cita->estado->id == 1) {
-                    $primerCaracter = $cita->tramite->name[0];
-                    $turno = Turno::whereRaw("SUBSTRING(name, 1, 1) = ?", $primerCaracter)->latest()->first();
-
-                    if ($turno) {
-                        $count = substr($turno->name, 1, 2);
-                        $cita->codigo = $turno->name[0] . ($count + 1);
-                    } else {
-
-                        $cita->codigo = $primerCaracter . '1';
-                    }
-
-                    $cita->impresion = $fechaActual;
-                } else {
-                    Session::flash('success', 'Ya tiene Un Turno Asignado');
-                    return redirect()->route('Turnos.Registrar');
-                }
-            }
-            Session::flash('success', 'Búsqueda Exitosa');
-            return view('Turnos.Generar', compact('citas'));
-        } else {
+    
+        if ($citas->isEmpty()) {
             Session::flash('error', 'No tiene cita asignada');
             return redirect()->route('Turnos.Registrar');
         }
+    
+        foreach ($citas as $cita) {
+            if ($cita->estado->id != 1) {
+                Session::flash('success', 'Ya tiene un turno asignado');
+                return redirect()->route('Turnos.Registrar');
+            }
+    
+            $primerCaracter = $cita->tramite->name[0];
+            $turno = Turno::whereRaw("SUBSTRING(name, 1, 1) = ?", $primerCaracter)->latest()->first();
+    
+            if ($turno) {
+                $count = substr($turno->name, 1, 2);
+                $cita->codigo = $turno->name[0] . ($count + 1);
+            } else {
+                $cita->codigo = $primerCaracter . '1';
+            }
+    
+            $cita->impresion = $fechaActual;
+        }
+    
+        Session::flash('success', 'Búsqueda Exitosa');
+        return view('Turnos.Generar', compact('citas'));
     }
     /**
      * Show the form for editing the specified resource.
@@ -321,11 +322,12 @@ class TurnoController extends Controller
     {
    
         $turnos = Turno::whereHas('cita', function ($query) {
-                            $query->where('idestado', 3);
-                        })->with('cita')
-                        ->get();
-
-return view('Turnos.Visualizar', compact('turnos'));
+            $query->where('idestado', 3);
+        })
+        ->with('cita')
+        ->get();
+    
+    return view('Turnos.Visualizar', compact('turnos'));
 
     }
 
@@ -344,12 +346,11 @@ return view('Turnos.Visualizar', compact('turnos'));
         } elseif ($request->accion == 'finalizado') {
             $turno->cita->idestado = 4;
         }
-
+        
         $id = $turno->modulo->user_id;
-
-        $turno->save();
+        
         $turno->cita->save();
-
+        
         $info = '1';
         Session::flash('success', 'Finalizado Correctamente');
         return $this->atencion($id, $info);

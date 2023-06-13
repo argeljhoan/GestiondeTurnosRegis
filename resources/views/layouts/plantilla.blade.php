@@ -95,10 +95,22 @@
                             </div>
                         </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('admin.Gestion') }}">Informes</a>
-                        </li>
+                        @can('Informes.Reportes')
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Informes
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('Informes.Reportes', ['num' => '1']) }}">Buscar por Fechas</a>
+                                
+                                <a class="dropdown-item" href="{{ route('Informes.Reportes', ['num' => '2']) }}">Buscar por Estado</a>
 
+                                <a class="dropdown-item" href="{{ route('Informes.Reportes', ['num' => '3']) }}">Buscar por Tramite</a>
+
+                                <a class="dropdown-item" href="{{ route('Informes.Reportes', ['num' => '4']) }}">Buscar por Modulo</a>
+                            </div>
+                        </li>
+                        @endcan
 
                         @guest
                             <!-- @if (Route::has('login'))
@@ -137,12 +149,19 @@
         </nav>
 
         <main class="py-4">
-            @yield('content1')
+            <div class="container justify-content-center">
+                
+                    
+                        @yield('content1')
+                    
+               
+            </div>
         </main>
-    </div>
 
-    @yield('scripts')
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+   
+    
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <script>
@@ -157,5 +176,6 @@
             });
         });
     </script>
+     @yield('scripts')
 </body>
 </html>

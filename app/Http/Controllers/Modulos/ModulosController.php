@@ -69,6 +69,8 @@ class ModulosController extends Controller
         return view('Modulos.Registro', compact('tramites'));
     }
 
+   
+
     /**
      * Store a newly created resource in storage.
      *

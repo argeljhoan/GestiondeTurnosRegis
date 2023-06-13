@@ -62,5 +62,8 @@ class RoleSeeder extends Seeder
         Permission:: create(['name' => 'Turnos.Visualizar'])->syncRoles($role4,$role1);
         Permission:: create(['name' => 'Turnos.Digital'])->syncRoles($role4,$role1);
 
+        Permission:: create(['name' => 'Informes.Reportes'])->syncRoles($role1,$role2);
+
+        
     }
 }

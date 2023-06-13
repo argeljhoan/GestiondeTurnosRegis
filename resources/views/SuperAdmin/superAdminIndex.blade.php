@@ -2,28 +2,62 @@
 
 
 @section('content1')
-
-
-<section class="main-section">
-    <div class="accordion">
+<section>
+    <div class="">
         <div class="header">
             <img src="images/logo-black.svg" alt="Logo Registraduría Nacional del Estado Civil">
         </div>
-        <ul>
-            <li tabindex="0">
-                <div>
-                    <a href="#">
-                        <section class="hero-section">
-                            <div class="content">
-                                <h1>Bienvenido a la Registraduría Especial de Cúcuta</h1>
-                                <p>¡Transformando la experiencia de los trámites en línea!</p>
-                            </div>
-                        </section>
-                    </a>
-                </div>s
-            </li>
-        </ul>
     </div>
+
+</section>
+
+<section class=" mt-5">
+    
+
+    <div class="container mt-5">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="card mb-4">
+            
+             <h1>Usuario Atendidos</h1>
+
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="card mb-4">
+
+              <h1> Turnos Actuales</h1>
+
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="card mb-4">
+
+              <h1> Turnos Proximos</h1>
+
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card mb-4">
+
+              <h1>Promedio de Atencion Por Modulo</h1>
+
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card mb-4">
+
+              <h1> Cedulas Digitales</h1>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
 </section>
 
 @endsection

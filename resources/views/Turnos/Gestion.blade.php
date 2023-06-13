@@ -23,8 +23,9 @@
     </table>
   
     <!-- Search form -->
-    @can('Turnos.Buscar')
+    
     <div class="container center">
+      @can('Turnos.Buscar')
       <div class="row">
         <div class="col-sm-8 offset-sm-2">
           <form method="POST" action="{{ route('Turnos.Buscar') }}">
@@ -45,6 +46,7 @@
           </form>
         </div>
       </div>
+      @endcan
       <!-- Error/success messages -->
       <div class="mt-5">
         @if (Session::has('error'))
@@ -59,7 +61,7 @@
         @endif
       </div>
     </div>
-  @endcan
+ 
     <!-- Appointments table -->
     <table class="table border-primary mt-5 table-hover">
       <thead class="table-primary">
@@ -178,7 +180,7 @@
   @endsection
   
   @section('scripts')
-  <script src="{{ asset('js/app.js') }}"></script>
+  
   <script>
     setTimeout(function() {
       var errorMessage = document.getElementById('error-message');

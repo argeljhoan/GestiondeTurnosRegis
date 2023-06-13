@@ -7,9 +7,26 @@
     <div class="row " >
         @foreach ($modulosData as $moduloData)
         <div class="col-md-3 mt-3">
-            <div class="card" style="height: 300px; overflow-y: auto;">
+            <div class="card" style="height: 320px; overflow-y: auto;">
                 <div class="card-body">
-                    <div class="d-flex justify-content-end gap-2">
+
+                   
+             
+
+
+                    <div class="d-flex justify-content-between">
+
+                        <div class="d-flex justify-content-start gap-2">
+                            @can('Modulos.Gestion')
+                            <a class="btn btn-primary btn-sm text-end" href="{{ route('Modulos.Turnos',$moduloData['id']) }}">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
+                                <path d="M8 2a6 6 0 0 0-6 6c0 1.608.784 3.093 2.086 4.003C3.15 12.112 5.16 13 8 13c2.84 0 4.85-.888 5.914-2.997C13.216 11.094 14 9.609 14 8a6 6 0 0 0-6-6zm0 10c-1.691 0-3.203-.81-4.177-2.077A17.8 17.8 0 0 1 2 8a17.8 17.8 0 0 1 1.823-1.923C4.797 4.81 6.309 4 8 4c1.691 0 3.203.81 4.177 2.077A17.8 17.8 0 0 1 14 8a17.8 17.8 0 0 1-1.823 1.923C11.203 11.19 9.691 12 8 12zm0-7a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z" />
+                              </svg> Ver Modulo
+                            </a>
+                            @endcan
+                          </div>
+
+                        <div class="d-flex justify-content-end gap-2">             
                         <div class="button">
                             <a class="btn btn-warning btn-sm" href="{{ route('Modulos.Editar',$moduloData['id']) }} ">
                               <svg xmlns="http://www.w3.org/2000/svg" width="12" height="10" fill="currentColor" class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
@@ -28,7 +45,10 @@
                             </a>
                         </div>
                     </div>
-                    <h4 class="card-title">{{ $moduloData['modulo'] }}</h4>
+
+                    </div>
+                    <div class="mt-4">
+                    <h4 class="card-title" style= "color: #2e14ff;font-weight: 700">{{ $moduloData['modulo'] }}</h4>
                     <h5 class="card-title"> {{ $moduloData['User'] }} </h5> 
                     <p class="card-text">Trámites:</p>
                     <ul>
@@ -36,7 +56,10 @@
                             <li>{{ $tramite }}</li>
                         @endforeach
                     </ul>
-                 
+                </div>
+                   
+                           
+                    
                 </div>
             </div>
         </div>

@@ -3,12 +3,12 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\GestionOperadoresController;
 use App\Http\Controllers\Admin\RegisterOperadorController;
-use App\Http\Controllers\Admin\SeguimientoController;
+use App\Http\Controllers\Informe\InformeController;
 use App\Http\Controllers\Modulos\ModulosController;
 use App\Http\Controllers\Tramites\TramiteController;
 use App\Http\Controllers\Turnos\TurnoController;
 USE App\Http\Controllers\HomeController;
-
+use Illuminate\Support\Facades\Auth;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -47,6 +47,9 @@ Route::get('/Editar-Modulos/{moduloData}', [ModulosController::class,'edit'])->n
 Route::put('/Actualizar-Modulos/{modulo}', [ModulosController::class,'update'])->name('Modulos.Actualizar');
 Route::delete('Eliminar-Modulo/{modulo}', [ModulosController::class,'destroy'])->name('Modulos.Eliminando');
 Route::get('Eliminar-Modulo/{modulo}', [ModulosController::class,'eliminando'])->name('Modulos.Eliminar');
+Route::get('/Modulos-Operador/{modulo}', [ModulosController::class,'turno'])->name('Modulos.Turnos');
+
+
 
 Route::get('/Gestion-Tramites', [TramiteController::class,'index'])->name('Tramites.Gestion');
 Route::get('/Registro-Tramite', [TramiteController::class,'create'])->name('Tramites.Registrar');
@@ -71,5 +74,15 @@ Route::put('/Finalizar/Turno/{turno}', [TurnoController::class,'update'])->name(
 Route::get('Gestion-Turnos/Visualizar', [TurnoController::class,'visualizar'])->name('Turnos.Visualizar');
 Route::get('Gestion-Turnos/Cedulas-Digitales', [TurnoController::class,'digital'])->name('Turnos.Digital');
 Route::post('Gestion-Turnos/Cedulas-Digitales', [TurnoController::class, 'digitalstore'])->name('Turnos.CitasDigital');
+Route::get('/Modulos-Operador/{modulo}', [TurnoController::class,'turno'])->name('Modulos.Turnos');
 
-Route::get('SuperAdmin/Seguimiento', [SeguimientoController::class,'index'])->name('admin.Seguimiento');  
+
+
+Route::get('/Reportes/{num}', [InformeController::class,'index'])->name('Informes.Reportes');
+
+Route::post('/Generar-Reporte', [InformeController::class,'export'])->name('Informes.Generar');
+
+Route::post('/Reportes-Citas/Rango', [InformeController::class, 'buscarRango'])->name('Informes.BusquedaRango');
+Route::post('/Reportes-Citas/Estado', [InformeController::class, 'buscarestado'])->name('Informes.BusquedaEstado');
+Route::post('/Reportes-Citas/Tramite', [InformeController::class, 'buscartramite'])->name('Informes.BusquedaTramite');
+Route::post('/Reportes-Citas/Modulo', [InformeController::class, 'buscarmodulo'])->name('Informes.BusquedaModulo');

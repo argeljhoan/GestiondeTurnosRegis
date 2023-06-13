@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('nombre', 100)->nullable();
             $table->string('apellido', 100)->nullable();
             $table->string('documento', 100)->nullable();
-            $table->unsignedBigInteger('identificacion')->unique()->nullable();
+            $table->unsignedBigInteger('identificacion')->nullable();
             $table->unsignedBigInteger('idTramite')->nullable();
             $table->unsignedBigInteger('idestado')->nullable();
             $table->foreign('idTramite')

@@ -5,7 +5,7 @@
     box-sizing: border-box;
 }
 body {
-    background-size: 100% auto;
+    background-size:auto;
     background-repeat: repeat-y;
     background: radial-gradient(
             circle at 67.6% 20.39%,
@@ -33,28 +33,33 @@ body {
     overflow: hidden;
     margin: 5px 20px 20px 20px;
     border-radius: 30px;
+    display: flex;
+    justify-content: center;
    
 }
 .header {
-    width: 800px;
+    width: 400px;
     height: 100px;
-    margin-top: 10px;
+    margin-top: 5px;
     display: flex;
     justify-content: center;
-    position: absolute;
+    align-items: center;
+    position: relative;
     border-radius: 40px;
+    border: solid 2px black;
     left: calc((100vw - 800px) / 2);
-    z-index: 99;
+   
     background: linear-gradient(
         198.35deg,
         #ffffff 31.67%,
         rgba(255, 255, 255, 0.6) 87.55%
     );
     backdrop-filter: blur(4px);
+    
 }
 .header img {
-    width: 100%;
-    max-width: 330px;
+    width: 70%;
+    max-width: 300px;
     padding: 10px;
 }
 .accordion ul {

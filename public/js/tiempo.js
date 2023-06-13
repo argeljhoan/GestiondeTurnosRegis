@@ -1,23 +1,50 @@
-document.addEventListener('DOMContentLoaded', function() {
-  var tiempoInicio = new Date().getTime();
+$(document).ready(function() {
+  // Obtener el elemento del cronómetro
+  var tiempoElement = document.getElementById('tiempo');
+  var contador = 0;
 
-  function actualizarCronometro() {
-    var tiempoActual = new Date().getTime();
-    var tiempoTranscurrido = tiempoActual - tiempoInicio;
+  // Obtener el valor inicial del contador desde el campo de tiempo en la página
+  var tiempoInicial = parseInt(tiempoElement.textContent);
 
-    // Formatear el tiempo transcurrido como una cadena legible (opcional)
-    var horas = Math.floor(tiempoTranscurrido / 3600000);
-    var minutos = Math.floor((tiempoTranscurrido % 3600000) / 60000);
-    var segundos = Math.floor((tiempoTranscurrido % 60000) / 1000);
-    var tiempoFormateado = horas + ':' + minutos + ':' + segundos;
+console.log(tiempoInicial);
 
-    // Actualizar el elemento HTML con el tiempo transcurrido formateado (opcional)
-    document.getElementById('tiempo').textContent = tiempoFormateado;
+  // Verificar si se obtuvo un valor válido desde la página o el almacenamiento local
+  var contadorLocalStorage = localStorage.getItem('contador');
+  if (tiempoInicial == 0 ) {
+    contador = tiempoInicial;
+  }
+  else if(contadorLocalStorage) {
+    contador = parseInt(contadorLocalStorage);
+  } else {
     
-    document.getElementById('tiempo_transcurrido').value = tiempoTranscurrido;
-
-    setTimeout(actualizarCronometro, 1000);
   }
 
-  actualizarCronometro();
+  // Función para actualizar el contador cada segundo
+  function actualizarCronometro() {
+    contador++;
+    var horas = Math.floor(contador / 3600);
+    var minutos = Math.floor((contador % 3600) / 60);
+    var segundos = contador % 60;
+    tiempoInicial = contador;
+    tiempoElement.textContent = horas.toString().padStart(2, '0') + ':' +
+                                 minutos.toString().padStart(2, '0') + ':' +
+                                 segundos.toString().padStart(2, '0');
+  }
+
+  // Iniciar el contador
+  var intervalo = setInterval(actualizarCronometro, 1000);
+
+  window.addEventListener('beforeunload', function() {
+    localStorage.setItem('contador', contador);
+    tiempoInicial = contador;
+  });
+
+  // Enviar el valor del contador al formulario cuando se envíe
+  $('#tiempoForm').submit(function() {
+    tiempoInicial = contador;
+    var tiempoTranscurridoInput = document.getElementById('tiempo_transcurrido');
+    tiempoTranscurridoInput.value = contador;
+    clearInterval(intervalo); // Detener el contador
+  });
+
 });

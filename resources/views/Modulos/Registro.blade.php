@@ -14,7 +14,7 @@
                         @csrf
 
                         <div class="mb-3 row">
-                            <label for="name" class="col-md-4 col-form-label" placeholder="example : Modulo-1">{{ __('Name:') }}</label>
+                            <label for="name" class="col-md-4 col-form-label" placeholder="example : Modulo-1">{{ __('Nombre del Modulo:') }}</label>
 
                             <div class="col-md-10">
                                 <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>

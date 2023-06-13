@@ -81,10 +81,11 @@
    </div>
  @endif
 </div>
+
   @if(!empty($info))
   <div class="card text-center">
     <div class="card-body">
-      <form action="{{ route('Turnos.Tiempo', ['turno' => $info->id]) }}" method="POST" id="tiempoForm">
+      <form id="tiempoForm" action="{{ route('Turnos.Tiempo', ['turno' => $info->id]) }}" method="POST" id="tiempoForm">
         @csrf
         <h2 class="card-title">Turno Actual</h2>
         <div class="datos-persona">
@@ -109,7 +110,9 @@
         
         <div class="operarios-container1 mt-3">
           <div class="acciones">
-            <input type="number" name="tiempo_transcurrido" id="tiempo_transcurrido">
+            <input type="hidden" name="tiempo_transcurrido" id="tiempo_transcurrido">
+        
+            <input type="hidden" name="id" id="id" value="0">
             <button type="submit" name="accion" value="no_gestiono" class="btn btn-danger mx-2">No Gestiono</button>
             <button type="submit" name="accion" value="finalizado" class="btn btn-primary mx-2">Finalizado</button>
           </div>
@@ -117,8 +120,7 @@
       </form>
     </div>
   </div>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="{{ asset('js/tiempo.js') }}"></script>
+
 
 @endif
 
@@ -128,7 +130,8 @@
 @endsection
 @section('scripts')
 
-<script src="{{ asset('js/app.js') }}"></script>
+<script src="{{ asset('js/tiempo.js') }}"></script>
+
 
 <script>
   $(function () {

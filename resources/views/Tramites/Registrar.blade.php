@@ -15,7 +15,7 @@
 
                         <div class="mb-3 row">
                            
-                            <label for="name" class="col-md-4 col-form-label" placeholder="example : Modulo-1">{{ __('Name:') }}</label>
+                            <label for="name" class="col-md-4 col-form-label" >{{ __('Nombre del Tramite:') }}</label>
 
                             <div class="col-md-10">
                                 <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
@@ -27,7 +27,11 @@
                                 @enderror
                             </div>
                        
-                          <p class="col-md-4 col-form-label ">Estos Son los Tramites de los Modulos, que Operan para la Atencion al Usuario</p>
+
+                          <div class="alert alert-info mt-5">
+                            <strong>Tramites:</strong> son Aquellas operaciones que realizan los Modulos, en la Atencion al Ciudadano, cada Modulo Cuenta con unos Tramites que se encarga de Atender
+                        </div>
+
                         <div class="mt-5">
                             @if (Session::has('error'))
                             <div id="error-message" class="alert alert-danger">

@@ -14,6 +14,7 @@ use Illuminate\Pagination\Paginator;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\CitasImport;
 
+use Response;
 class TurnoController extends Controller
 {
     /**
@@ -21,6 +22,7 @@ class TurnoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
 {
     $fechaActual = Carbon::now()->format('Y-m-d');
@@ -132,7 +134,8 @@ class TurnoController extends Controller
             $turnos = $cita->turnos;
             foreach ($turnos as $turno) {
                 $turno->idmodulo = $modulo->id;
-                $turno->atencion = '00:00:00';
+                $turno->atencion = 0;
+               
                 $turno->save();
                 $cita->save();
     
@@ -142,7 +145,7 @@ class TurnoController extends Controller
                 $info->apellido = $cita->apellido;
                 $info->identificacion = $cita->identificacion;
                 $info->turno = $turno->name;
-    
+                $info->tiempo = 0;
                 // Devolver la respuesta directamente en lugar de llamar a la función atencion()
                 $fechaActual = Carbon::now()->format('Y-m-d');
                 $tramites = Modulo::where('user_id', $id)->with('modulo_tramite')->get();
@@ -170,14 +173,16 @@ class TurnoController extends Controller
 
     public function guardarTiempoTranscurrido(Request $request, Turno $turno)
     {
+        $segundos = $request->tiempo_transcurrido;
+      
+        // $horas = floor($segundos / 3600);
+        // $minutos = floor(($segundos % 3600) / 60);
+        // $segundos = $segundos % 60;
+        
+       /// $tiempo = sprintf('%02d:%02d:%02d', $horas, $minutos, $segundos);
 
-        $tiempo = Carbon::createFromTimestamp($request->tiempo_transcurrido);
-        $tiempoFormateado = $tiempo->format('H:i:s');
-
-
-        $turno->atencion = $tiempoFormateado;
+        $turno->atencion = $segundos;
         $turno->save();
-
 
         if ($request->accion == 'no_gestiono') {
             // Acción cuando se presiona el botón "No Gestiono"
@@ -191,6 +196,31 @@ class TurnoController extends Controller
     }
 
 
+
+
+    public function Cargar_Pagina(Request $request)
+    {
+
+
+echo 'hola';
+    
+       // $segundos = $request->tiempo_transcurrido;
+      
+//return $segundos;
+       /// $horas = floor($segundos / 3600);
+      //  $minutos = floor(($segundos % 3600) / 60);
+     //   $segundos = $segundos % 60;
+        
+       /// $tiempo = sprintf('%02d:%02d:%02d', $horas, $minutos, $segundos);
+
+
+    }
+
+
+
+
+
+    
     /**
      * Store a newly created resource in storage.
      *
@@ -265,7 +295,7 @@ class TurnoController extends Controller
             ->get();
     
         if ($citas->isEmpty()) {
-            Session::flash('error', 'No tiene cita asignada');
+            Session::flash('error', 'Su Cita ha sido cancelada, se paso de la Hora establecida para generar su turno');
             return redirect()->route('Turnos.Registrar');
         }
     
@@ -307,14 +337,17 @@ class TurnoController extends Controller
     public function excel(Request $request)
     {
         $request->validate([
-            'archivo' => 'required|mimes:xls,xlsx'
+            'archivo' => 'required|mimes:xlsx,xls',
         ]);
 
-        $archivo = $request->file('archivo');
+        try {
+            Excel::import(new CitasImport, $request->file('archivo'));
+            return redirect()->route('Turnos.Gestion')->with('success', 'Las Citas han sido cargados correctamente.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Ocurrió un error al importar el archivo de citas: ' . $e->getMessage());
+        }
 
-        Excel::import(new CitasImport, $archivo);
-
-        return redirect()->route('Turnos.Gestion')->with('success', 'Las Citas han sido cargados correctamente.');
+      //  return redirect()->route('Turnos.Gestion')->with('success', 'Las Citas han sido cargados correctamente.');
     }
 
 
@@ -405,5 +438,17 @@ public function digitalstore(Request $turno){
    
   
 }
+
+
+public function turno(Modulo $modulo)
+{
+   
+
+    $id = $modulo->user_id;
+
+    $info = '0';
+    return $this->atencion($id, $info);
+}
+
 
 }

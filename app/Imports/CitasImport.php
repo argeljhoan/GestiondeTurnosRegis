@@ -8,60 +8,78 @@ use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Carbon\Carbon;
 use DateTime;
-use DateInterval;
+use Illuminate\Validation\Rule;
 
 class CitasImport implements ToModel, WithHeadingRow
 {
 
-   private $tramites;
-   public function __construct()
-   {
-   $this->tramites = Tramite::pluck('id','name');
-   } 
+    private $tramites;
+    private $fecha;
 
+    public function __construct()
+    {
+        $this->tramites = Tramite::pluck('id', 'name');
+    }
 
-    /**
-     * @param array $row
-     *
-     * @return \Illuminate\Database\Eloquent\Model|null
-     */
     public function model(array $row)
     {
-
+        $this->fecha = $row['fecha'];
+        
         $baseDate = new DateTime('1900-01-01');
         $daysToAdd = $row['fecha'];
         $convertedDate = date('Y-m-d', strtotime($baseDate->format('Y-m-d') . " +{$daysToAdd} days -2 days"));
 
-        $decimalTime = $row['hora'];
-        $hours = floor($decimalTime * 24);
-        $minutes = round(($decimalTime * 24 - $hours) * 60);
-        $time = Carbon::createFromTime($hours, $minutes, 0)->format('H:i:s');
+        $numeroDecimal = $row['hora'];
+        $hora = Carbon::createFromTime(floor($numeroDecimal * 24), 0, 0)->format('H:i:s');
 
 
 
-        $tramite = isset($row['tramite']) ? strtolower($row['tramite']) : null;
        
-        $idTramite = 0;
-        if ($tramite !== null && isset($this->tramites[$tramite])) {
-            $idTramite = $this->tramites[$tramite];
-           
+        $tramite = isset($row['tramite']) ? strtolower($row['tramite']) : null;
+        $idTramite = $tramite !== null && isset($this->tramites[$tramite]) ? $this->tramites[$tramite] : null;
+
+        $citaExistente = Cita::where('fechaCita', $convertedDate)
+            ->where('identificacion', $row['nuip'])
+            ->first();
+
+        if ($citaExistente) {
+           // La cita ya existe, realizar acciones adicionales o mostrar un mensaje de error...
+         //  return redirect()->back()->with('error', 'Ocurrió un error al importar el archivo de citas: Tienes Citas Repetidas el mismo dia ' );
+        } else {
+            return new Cita([
+                'fechaCita' => $convertedDate,
+                'hora' => $hora,
+                'numerocitas' => $row['n_cita'],
+                'nombre' => $row['nombres'],
+                'apellido' => $row['apellidos'],
+                'documento' => $row['doc'],
+                'identificacion' => $row['nuip'],
+                'idTramite' => $idTramite,
+                'idestado' => 1,
+            ]);
         }
-        else{
-            $idTramite = null;
-        }
-        
-        // Imprime el valor para verificar
-        //dd($idTramite);
-        return new Cita([
-            'fechaCita' => $convertedDate,
-            'hora' => $time,
-            'numerocitas' => $row['n_cita'],
-            'nombre' => $row['nombres'],
-            'apellido' => $row['apellidos'],
-            'documento' => $row['doc'],
-            'identificacion' => $row['nuip'],
-            'idTramite' => $idTramite,
-            'idestado' => 1,
-        ]);
+    }
+
+    public function rules(): array
+    {
+        return [
+            'fecha' => 'required|date',
+            'hora' => 'required|time',
+            'n_cita' => 'required|integer',
+            'nombres' => 'required|string',
+            'apellidos' => 'required|string',
+            'doc' => 'required|string',
+            'nuip' => [
+                'required',
+                'integer',
+                Rule::unique('citas')->where(function ($query) {
+                    $baseDate = new DateTime('1900-01-01');
+                    $daysToAdd = $this->fecha;
+                    $convertedDate = date('Y-m-d', strtotime($baseDate->format('Y-m-d') . " +{$daysToAdd} days -2 days"));
+                    $query->where('fechaCita', $convertedDate);
+                }),
+            ],
+            'tramite' => 'nullable|integer',
+        ];
     }
 }

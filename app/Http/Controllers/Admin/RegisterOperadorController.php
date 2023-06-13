@@ -45,17 +45,6 @@ class RegisterOperadorController extends Controller
     {
         $moduloId = $request->modulo;
 
-        // Validar que el email no esté registrado en la base de datos
-        $existingUserEmail = User::where('email', $request->email)->first();
-        if ($existingUserEmail) {
-            return redirect()->back()->withInput()->withErrors(['email' => 'Email ya Registrado']);
-        }
-
-        // Validar que las contraseñas ingresadas coincidan
-        if ($request->password != $request->password_confirmation) {
-            return redirect()->back()->withInput()->withErrors(['password' => 'Las contraseñas no coinciden.']);
-        }
-
         $password = $request->password;
         $users = User::all();
 
@@ -65,8 +54,6 @@ class RegisterOperadorController extends Controller
             }
         }
 
-
-        // Crear un nuevo usuario
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -128,7 +115,7 @@ class RegisterOperadorController extends Controller
 
     // Verificar si el correo del nuevo registro coincide con alguno de los correos obtenidos
     if (in_array($request->email, $otherEmails)) {
-        return redirect()->back()->withInput()->withErrors(['email' => 'Email ya Registrado']);
+        return redirect()->back()->withInput()->withErrors(['email' => 'El corro le pertenece a otro Usuario']);
     }
 
     // Verificar si la contraseña del nuevo registro coincide con alguna de las contraseñas obtenidas

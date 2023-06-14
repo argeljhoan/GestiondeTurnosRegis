@@ -64,7 +64,7 @@ protected function name():Attribute{
 
 public function modulos()
 {
-    return $this->hasMany(Modulo::class);
+    return $this->hasMany(Modulo::class).'user_id';
 }
 
 

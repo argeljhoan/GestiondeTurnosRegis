@@ -33,11 +33,6 @@ class CitasExport implements FromView, ShouldAutoSize, WithHeadings
 
 
 
-    
-
-
-
-
 
 
     public function headings(): array

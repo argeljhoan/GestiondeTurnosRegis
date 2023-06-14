@@ -46,14 +46,14 @@ body {
     align-items: center;
     position: relative;
     border-radius: 40px;
-    border: solid 2px black;
-    left: calc((100vw - 800px) / 2);
-   
+    margin:auto;
+
     background: linear-gradient(
         198.35deg,
         #ffffff 31.67%,
-        rgba(255, 255, 255, 0.6) 87.55%
+        rgba(255, 255, 255, 0.8) 87.55%
     );
+
     backdrop-filter: blur(4px);
     
 }

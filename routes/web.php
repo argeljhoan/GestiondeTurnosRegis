@@ -7,6 +7,7 @@ use App\Http\Controllers\Informe\InformeController;
 use App\Http\Controllers\Modulos\ModulosController;
 use App\Http\Controllers\Tramites\TramiteController;
 use App\Http\Controllers\Turnos\TurnoController;
+use App\Http\Controllers\Dasboarh\DasbohardController;
 USE App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 /*
@@ -77,12 +78,12 @@ Route::post('Gestion-Turnos/Cedulas-Digitales', [TurnoController::class, 'digita
 Route::get('/Modulos-Operador/{modulo}', [TurnoController::class,'turno'])->name('Modulos.Turnos');
 
 
-
 Route::get('/Reportes/{num}', [InformeController::class,'index'])->name('Informes.Reportes');
-
 Route::post('/Generar-Reporte', [InformeController::class,'export'])->name('Informes.Generar');
-
 Route::post('/Reportes-Citas/Rango', [InformeController::class, 'buscarRango'])->name('Informes.BusquedaRango');
 Route::post('/Reportes-Citas/Estado', [InformeController::class, 'buscarestado'])->name('Informes.BusquedaEstado');
 Route::post('/Reportes-Citas/Tramite', [InformeController::class, 'buscartramite'])->name('Informes.BusquedaTramite');
 Route::post('/Reportes-Citas/Modulo', [InformeController::class, 'buscarmodulo'])->name('Informes.BusquedaModulo');
+
+
+

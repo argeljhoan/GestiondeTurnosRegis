@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Cita;
+use App\Models\Turno;
+use App\Models\Modulo;
 
 class HomeController extends Controller
 {
@@ -23,6 +26,71 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('SuperAdmin.superAdminIndex');
+
+
+        $atendidos = Cita::where('idestado', 4)->get();
+
+        $turnosActuales = Turno::whereHas('cita', function ($query) {
+            $query->where('idestado', 3);
+        })->with('cita')->get();
+
+
+        $turnosProximos = Turno::whereHas('cita', function ($query) {
+            $query->where('idestado', 2);
+        })->with('cita')->get();
+
+       
+
+
+        $modulos = Modulo::whereHas('turnos', function ($query) {
+            $query->whereHas('cita', function ($query) {
+                $query->where('idestado', 4);
+            });
+        })->with(['turnos' => function ($query) {
+            $query->whereHas('cita', function ($query) {
+                $query->where('idestado', 4);
+            });
+        }])->get();
+
+
+        foreach ($modulos as $modulo) {
+            $turnos = $modulo->turnos;
+
+            $sumAtencion = 0;
+            $countTurnos = count($turnos);
+            $modulo->persona = $countTurnos;
+
+            foreach ($turnos as $turno) {
+                $sumAtencion += $turno->atencion;
+            }
+
+            if ($countTurnos > 0) {
+                $promedio = $sumAtencion / $countTurnos;
+
+                // Guardar el promedio en cada turno del módulo
+
+
+                $segundo = $modulo->promedio = $promedio;
+
+                $horas = floor($segundo  / 3600);
+                $minutos = floor(($segundo  % 3600) / 60);
+                $segundos = $segundo  % 60;
+                $tiempo = sprintf('%02d:%02d:%02d', $horas, $minutos, $segundos);
+
+                $modulo->promedio = $tiempo;
+            }
+        }
+
+        $count = 0;
+
+        foreach ($atendidos as $atendido) {
+            $count++;
+        }
+
+        $atendido = $count;
+
+
+
+        return view('SuperAdmin.superAdminIndex', compact('atendido','turnosActuales','modulos','turnosProximos'));
     }
 }

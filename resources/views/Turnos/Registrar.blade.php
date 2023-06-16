@@ -5,10 +5,11 @@
     <div class="row">
         <div class="col-sm-8 offset-sm-2">
             <div class="card">
+                <label for="" class="card-header">Solicitar Turno de la Cita</label>
                 <div class="card-body">
                     <form method="POST" action="{{ route('Turnos.Generar') }}">
                         @csrf
-                        <div class="input-group mb-3">
+                        <div class="input-group mb-3 gap-2">
                             <div class="col-md-10">
                                 <input id="name" placeholder="Ingrese su Identificacion" type="number"
                                     class="form-control mt-5 @error('name') is-invalid @enderror" name="name"
@@ -19,10 +20,12 @@
                                 </span>
                                 @enderror
                             </div>
-                            <div class="input-group-append">
+                            <div class="input-group-append ">
                                 <button class="btn btn-primary mt-5" type="submit">Generar</button>
                             </div>
                         </div>
+
+                      
                         <div class="mt-5">
                             @if (Session::has('error'))
                             <div id="error-message" class="alert alert-danger">
@@ -36,6 +39,10 @@
                             @endif
                         </div>
                     </form>
+                    <div class="input-group-append mt-2">
+                        <a class="btn btn-primary" href="{{ route('Turnos.Digital')}}">Turno de Cedulas Digitales</a>
+                    </div>
+
                 </div>
             </div>
         </div>

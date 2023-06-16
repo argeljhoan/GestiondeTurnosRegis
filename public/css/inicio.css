@@ -48,3 +48,8 @@
     margin-bottom: 150px;
     margin-left: 200px;
 }
+
+.errorMessage {
+  display: none;
+}
+

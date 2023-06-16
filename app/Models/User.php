@@ -27,6 +27,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'idestado',
     ];
 
     /**
@@ -64,7 +65,7 @@ protected function name():Attribute{
 
 public function modulos()
 {
-    return $this->hasMany(Modulo::class).'user_id';
+    return $this->hasMany(Modulo::class,'user_id');
 }
 
 

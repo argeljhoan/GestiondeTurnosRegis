@@ -23,7 +23,10 @@ class EstadoSeeder extends Seeder
         'Con Turno',
         'Atendiendo',
         'Atendido',
-        'No Gestiono'
+        'No Gestiono',
+        'Activo',
+        'Inactivo'
+
         ];
         foreach ($names as $name) {
             Estado::create([

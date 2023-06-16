@@ -8,6 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{ asset('css/inicio.css') }}">
     <link rel="stylesheet" href="{{ asset('css/landing.css') }}">
+ 
     <title>Sistema de Gestion de Turnos</title>
 
     <!-- Fonts -->
@@ -46,26 +47,67 @@
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
 
-                        @can('admin.home')
-                        <li class="nav-item active">
-                            <a class="nav-link" href="{{ route('admin.home') }}">Inicio <span class="sr-only"></span></a>
+                      
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                               Home
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ route('admin.Inicio') }}">Inicio <span class="sr-only"></span></a>
+                            @can('admin.home')
+                            <a class="dropdown-item" href="{{ route('admin.home') }}">Dashboard <span class="sr-only"></span></a>
+                            @endcan
+                            </div>
                         </li>
-                        @endcan
+                      
                         @can('admin.Gestion')
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('admin.Gestion') }}">Gestion De Operadores</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Operadores
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('admin.Gestion') }}">Gestion <span class="sr-only"></span></a>
+                            
+                                <a class="dropdown-item" href="{{ route('admin.inhabilitados') }}">Operadores Inhabilitados <span class="sr-only"></span></a>
+                              
+                            </div>
+
                         </li>
                         @endcan
                         @can('Modulos.Gestion')
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('Modulos.Gestion') }}">Gestion de Modulos</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Modulos
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('Modulos.Gestion') }}">Gestion <span class="sr-only"></span></a>
+                            
+                                <a class="dropdown-item" href="{{ route('Modulos.inhabilitados',['num' => '1']) }}">Modulos Inhabilitados <span class="sr-only"></span></a>
+                              
+                            </div>
+                            
                         </li>
                         @endcan
+
                         @can('Tramites.Gestion')
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('Tramites.Gestion') }}">Gestion de Tramites</a>
+                        <li class="nav-item dropdown">
+
+                            <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Tramites
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('Tramites.Gestion') }}">Gestion <span class="sr-only"></span></a>
+                            
+                                <a class="dropdown-item" href="{{ route('Tramites.inhabilitados',['num' => '2']) }}">Tramites Inhabilitados <span class="sr-only"></span></a>
+                              
+                            </div>
+                           
                         </li>
                         @endcan
+                        
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Gestion de Turnos
@@ -128,11 +170,11 @@
                             -->
                         @else
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name}}
                                 </a>
 
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
@@ -159,20 +201,29 @@
         </main>
 
     </div>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-   
+
     
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+   
     <script>
-        $(document).ready(function () {
-            // Selecciona el elemento con la clase 'dropdown-toggle' y agrega el evento de clic
-            $('.dropdown-toggle').click(function () {
-                // Obtiene el menú desplegable asociado al elemento clicado
-                var dropdownMenu = $(this).next('.dropdown-menu');
-
-                // Verifica si el menú está oculto o visible y lo alterna
-                dropdownMenu.toggle();
+        document.addEventListener('DOMContentLoaded', function() {
+            var dropdownToggle = document.querySelector('.dropdown-toggle');
+            dropdownToggle.addEventListener('click', function(e) {
+                e.preventDefault();
+                var dropdownMenu = dropdownToggle.nextElementSibling;
+                dropdownMenu.classList.toggle('show');
+            });
+    
+            document.addEventListener('click', function(e) {
+                var target = e.target;
+                if (!target.closest('.dropdown-toggle')) {
+                    var dropdownMenus = document.querySelectorAll('.dropdown-menu');
+                    dropdownMenus.forEach(function(dropdownMenu) {
+                        dropdownMenu.classList.remove('show');
+                    });
+                }
             });
         });
     </script>

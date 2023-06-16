@@ -35,6 +35,7 @@ class Tramite extends Model
     protected $fillable = 
     [
         'name',
+        'tramiteestado',
     ];
     
 }

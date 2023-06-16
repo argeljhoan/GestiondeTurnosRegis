@@ -17,9 +17,14 @@ return new class extends Migration
             $table->id();
             $table->string('nameModulo');
             $table->unsignedBigInteger('user_id')->nullable();
+            $table->unsignedBigInteger('estadomodulo')->nullable();
             $table->foreign('user_id')
           ->references('id')
           ->on('users')
+          ->onDelete('cascade');
+          $table->foreign('estadomodulo')
+          ->references('id')
+          ->on('estados')
           ->onDelete('cascade');
             $table->timestamps();
         });

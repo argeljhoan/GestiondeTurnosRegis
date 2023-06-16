@@ -17,6 +17,7 @@ class Modulo extends Model
     [
         'nameModulo',
         'user_id',
+        'estadomodulo',
     ];
 
     public function user()

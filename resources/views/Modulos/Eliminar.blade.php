@@ -7,10 +7,10 @@
         <div class="col-md-8 offset-md-2">
             <div class="card">
                 <div class="card-header">
-                    Confirmar eliminación
+                    Confirmar Inhabilitacion
                 </div>
                 <div class="card-body">
-                    <p>¿Estás seguro de que deseas eliminar este Modulo</p>
+                    <p>¿Estás seguro de que deseas Inhabilitar este Modulo</p>
                     <p><strong>Nombre:</strong> {{ $modulo->nameModulo }}</p>
                     <p><strong>Operador:</strong> {{ $modulo->name }}</p>
 
@@ -18,8 +18,12 @@
                         @csrf
                         @method('delete')
 
+                        <div class="alert alert-info mt-3">
+                            <strong>Modulos:</strong> Si Inhabilitas Este Modulo y tiene un usuario Operador asignado, este tambien se inhabilitara.
+                        </div>
+
                         <div class="d-flex flex-row gap-3 ">
-                            <button type="submit" class="btn btn-danger  ">Eliminar</button>
+                            <button type="submit" class="btn btn-danger  ">Inhabilitar</button>
                             <a href="{{ route('Modulos.Gestion') }}" class="btn btn-secondary">Cancelar</a>
                         </div>
 

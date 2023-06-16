@@ -48,7 +48,8 @@ class TramitesSeeder extends Seeder
 ];
 foreach ($names as $name) {
     Tramite::create([
-        'name' => $name
+        'name' => $name,
+        'tramiteestado' => 6
     ]);
 }
 }

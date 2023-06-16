@@ -15,9 +15,32 @@ class TramiteController extends Controller
      */
     public function index()
     {
-        $tramites = Tramite::paginate();
+        $tramites = Tramite::where('tramiteestado',6)->paginate();
 
         return view('Tramites.Gestion', compact('tramites'));
+    }
+
+    public function inhabilitado(){
+
+        $tramites = Tramite::where('tramiteestado',7)->get();
+
+        $num = 2;
+        return view('Modulos.Habilitar', compact('tramites','num'));
+
+      
+    }
+
+    public function habilitar(Request $request){
+
+        $tramites = Tramite::where('id',$request->tramite)->first();
+        $tramites->tramiteestado=6;
+        $tramites->save();
+        $num =2;
+        Session::flash('success', 'Tramite Habilitado Exitosamente');
+        return $this->inhabilitado($num);
+
+
+
     }
 
     /**
@@ -39,12 +62,16 @@ class TramiteController extends Controller
     public function store(Request $request)
     {
 
-        
+        $tramites = Tramite::whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($request->name) . '%'])->first();
+
+      
         $tramite = Tramite::create([
             'name' => $request->name,
+            'tramiteestado' => 6,
         ]);
         Session::flash('success', 'Registro exitoso');
         return redirect()->back();
+    
     }
 
     /**
@@ -102,7 +129,9 @@ class TramiteController extends Controller
 
     public function destroy(Tramite $tramite)
     {
-        $tramite->delete();
-         return redirect()->route('Tramites.Gestion');
+        $tramite->tramiteestado=7;
+        $tramite->save();
+
+       return redirect()->route('Tramites.Gestion');
     }
 }

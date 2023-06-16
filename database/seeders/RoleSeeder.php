@@ -21,9 +21,8 @@ class RoleSeeder extends Seeder
         $role4 = Role::create(['name' => 'Usuario' ]);
 
 
-        Permission:: create(['name' => 'admin.home'])->syncRoles($role1,$role2,$role3);
+        Permission:: create(['name' => 'admin.home'])->syncRoles($role1,$role2);
 
-        //
         Permission:: create(['name' => 'admin.Gestion'])->syncRoles($role1,$role2);
         Permission:: create(['name' => 'admin.modulo'])->syncRoles($role1);
         Permission:: create(['name' => 'admin.Registro'])->syncRoles($role1);
@@ -60,7 +59,7 @@ class RoleSeeder extends Seeder
         Permission:: create(['name' => 'Turnos.Operadores'])->syncRoles($role3);
         Permission:: create(['name' => 'Turnos.Atencion'])->syncRoles($role3);
         Permission:: create(['name' => 'Turnos.Visualizar'])->syncRoles($role4,$role1);
-        Permission:: create(['name' => 'Turnos.Digital'])->syncRoles($role4,$role1);
+        Permission:: create(['name' => 'Turnos.Digital'])->syncRoles($role1);
 
         Permission:: create(['name' => 'Informes.Reportes'])->syncRoles($role1,$role2);
 

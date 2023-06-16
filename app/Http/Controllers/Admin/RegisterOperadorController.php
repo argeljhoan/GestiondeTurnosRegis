@@ -20,10 +20,39 @@ class RegisterOperadorController extends Controller
      */
     public function index()
     {
-        $modulos = Modulo::whereNull('user_id')->get();
+        $modulos = Modulo::whereNull('user_id')->where('estadomodulo',6)->get();
         return view('SuperAdmin.RegistroOperadores', compact('modulos'));
     }
 
+    
+public function inhabilitado(){
+
+    $operadores = User::where('idestado',7)->get();
+
+    $modulos = Modulo::where('estadomodulo',6)->where('user_id',null)->get();
+
+    return view('SuperAdmin.Habilitar' ,compact('operadores','modulos'));
+}
+
+
+
+public function habilitar(Request $request){
+
+    $id = $request->user;
+    $idmodulo =$request->modulo;
+    $operadores = User::where('id',$id )->first();
+    $operadores->idestado = 6;
+    $operadores->save();
+  
+   
+    $modulos = Modulo::where('id',$idmodulo)->first();
+    $modulos->estadomodulo=6;
+    $modulos->user_id=$id;
+    $modulos->save();
+
+    Session::flash('success', 'El Operador ha Sido Habilitado');
+    return redirect()->back();
+}
     /**
      * Show the form for creating a new resource.
      *
@@ -57,7 +86,8 @@ class RegisterOperadorController extends Controller
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => bcrypt($request->password)
+            'password' => bcrypt($request->password),
+            'idestado' => 6
         ]);
 
         // Asignar un módulo al usuario
@@ -72,16 +102,7 @@ class RegisterOperadorController extends Controller
         return redirect()->back();
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+    
 
     /**
      * Show the form for editing the specified resource.
@@ -177,7 +198,9 @@ class RegisterOperadorController extends Controller
     {
         
         $user->modulos()->update(['user_id' => null]);
-        $user->delete();
+        $user->idestado = 7;
+        $user->save();
+       
         return redirect()->route('admin.Gestion');
     }
 }

@@ -34,8 +34,9 @@
                           <th>Editar</th>
                           @endcan
                           @can('admin.Eliminando')
-                          <th>Eliminar</th>
+                          <th>Inhabilitar</th>
                           @endcan
+                         
                       </tr>
                   </thead>
                   <tbody>
@@ -77,6 +78,7 @@
                             </div>
                         </td>
                         @endcan  
+                      
                       </tr>
                       @endforeach
                       <tbody>     

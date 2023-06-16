@@ -32,7 +32,7 @@
                           <th>Editar</th>
                           @endcan
                           @can('Tramites.Eliminar')
-                          <th>Eliminar</th>
+                          <th>Inhabilitar</th>
                           @endcan
                       </tr>
                   </thead>

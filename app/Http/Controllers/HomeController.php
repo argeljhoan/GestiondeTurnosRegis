@@ -23,12 +23,28 @@ class HomeController extends Controller
      * Show the application dashboard.
      *
      * @return \Illuminate\Contracts\Support\Renderable
+     * 
+
      */
+
+public function Inicio(){
+
+    return view('SuperAdmin.Inicio');
+
+}
+
     public function index()
     {
 
 
         $atendidos = Cita::where('idestado', 4)->get();
+
+        $cedulasatendidos = Cita::where('idestado', 4)->whereHas('tramite',function($query){
+        
+            $query->whereRaw('LOWER(name) LIKE ?', ['%digital%']);
+
+        })->get();
+
 
         $turnosActuales = Turno::whereHas('cita', function ($query) {
             $query->where('idestado', 3);
@@ -82,15 +98,21 @@ class HomeController extends Controller
         }
 
         $count = 0;
+        $cedulas =0;
 
         foreach ($atendidos as $atendido) {
             $count++;
         }
 
+        foreach ($cedulasatendidos as $cedula) {
+            $cedulas++;
+            
+        }
+        
         $atendido = $count;
 
 
 
-        return view('SuperAdmin.superAdminIndex', compact('atendido','turnosActuales','modulos','turnosProximos'));
+        return view('SuperAdmin.superAdminIndex', compact('atendido','turnosActuales','modulos','turnosProximos','cedulas'));
     }
 }

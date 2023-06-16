@@ -27,7 +27,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/Inicio', [HomeController::class, 'index'])->name('admin.home');
+Route::get('/Inicio/Dasbohard', [HomeController::class, 'index'])->name('admin.home');
+Route::get('/Inicio', [HomeController::class, 'Inicio'])->name('admin.Inicio');
 
 Route::get('/Gestion-Operadores', [GestionOperadoresController::class,'index'])->name('admin.Gestion');
 
@@ -39,6 +40,8 @@ Route::get('/Editar-Operadores/{user}', [RegisterOperadorController::class,'edit
 Route::put('/GestionOperadores/{user}', [RegisterOperadorController::class,'update'])->name('admin.Actualizar');
 Route::delete('GestionOperadores/{user}', [RegisterOperadorController::class,'destroy'])->name('admin.Eliminar');
 Route::get('Eliminar-Operador/{user}', [RegisterOperadorController::class,'eliminando'])->name('admin.Eliminando');
+Route::get('Operadores-Inhabilitados', [RegisterOperadorController::class,'inhabilitado'])->name('admin.inhabilitados');
+Route::post('/Operador-Habilitado', [RegisterOperadorController::class,'habilitar'])->name('admin.Habilitar');
 
 
 Route::get('/Gestion-Modulos', [ModulosController::class,'index'])->name('Modulos.Gestion');
@@ -49,6 +52,8 @@ Route::put('/Actualizar-Modulos/{modulo}', [ModulosController::class,'update'])-
 Route::delete('Eliminar-Modulo/{modulo}', [ModulosController::class,'destroy'])->name('Modulos.Eliminando');
 Route::get('Eliminar-Modulo/{modulo}', [ModulosController::class,'eliminando'])->name('Modulos.Eliminar');
 Route::get('/Modulos-Operador/{modulo}', [ModulosController::class,'turno'])->name('Modulos.Turnos');
+Route::get('Modulos-Inhabilitados/{num}', [ModulosController::class,'inhabilitado'])->name('Modulos.inhabilitados');
+Route::post('/Modulos-Habilitado', [ModulosController::class,'habilitar'])->name('Modulos.Habilitar');
 
 
 
@@ -59,6 +64,8 @@ Route::get('/Editar-Tramite/{tramite}', [TramiteController::class,'edit'])->name
 Route::put('/Actualizar-Tramite/{tramite}', [TramiteController::class,'update'])->name('Tramites.Actualizar');
 Route::get('Eliminar-Tramite/{tramite}', [TramiteController::class,'eliminando'])->name('Tramites.Eliminar');
 Route::delete('Eliminando-Tramite/{tramite}', [TramiteController::class,'destroy'])->name('Tramites.Eliminando');
+Route::get('Tramites-Inhabilitados/{num}', [TramiteController::class,'inhabilitado'])->name('Tramites.inhabilitados');
+Route::post('/Tramite-Habilitado', [TramiteController::class,'habilitar'])->name('Tramites.Habilitar');
 
 Route::get('/Gestion-Turnos', [TurnoController::class,'index'])->name('Turnos.Gestion');
 Route::post('/Gestion-Turnos', [TurnoController::class,'show'])->name('Turnos.Buscar');

@@ -21,9 +21,10 @@ class GestionOperadoresController extends Controller
     public function index()
 
     {
+        //
         $usuarios = User::whereHas('roles', function ($query) {
             $query->where('id', 3);
-        })->with('modulos')->get(['id', 'name', 'email']);
+        })->where('idestado',6)->with('modulos')->get(['id', 'name', 'email']);
         return view('SuperAdmin.GestionOperadores', compact('usuarios'));
     }
 

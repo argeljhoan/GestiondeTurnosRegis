@@ -2,14 +2,7 @@
 
 
 @section('content1')
-<section>
-    <div class="d-flex justify-content-center">
-        <div class="header">
-            <img src="images/logo-black.svg" alt="Logo Registraduría Nacional del Estado Civil">
-        </div>
-    </div>
 
-</section>
 
 <section class=" mt-5">
   
@@ -77,22 +70,47 @@
 
 
     <div class="container mt-2">
+      
+      
         <div class="row">
-          <div class="col-md-6">
-           
-            <div class="card mb-4">
-                <div class="card-header">{{ __('Usuarios Atendidos') }}</div>
-                <div class="card-body">
-                    <h3 class="text-primary">Usuarios Atendidos: <span style="color:black">{{$atendido}}</span></h3>
-                    
-                </div>
 
-             
+            <div class="col">
+
+                <div class="col-md-12">
+           
+                    <div class="card mb-2">
+                        <div class="card-header">{{ __('Usuarios Atendidos') }}</div>
+                        <div class="card-body">
+                            <h3 class="text-primary">Usuarios Atendidos: <span style="color:black">{{$atendido}}</span></h3>
+                            
+                        </div>
+        
+                     
+                    </div>
+                  </div>
+
+
+                  <div class="col-md-12">
+           
+                    <div class="card mb-2">
+                        <div class="card-header">{{ __('Cedulas Digitales Atendidos') }}</div>
+                        <div class="card-body">
+                            <h3 class="text-primary">C.C Digitales Atendidas: <span style="color:black">{{$cedulas}}</span></h3>
+                            
+                        </div>
+        
+                     
+                    </div>
+                  </div>
+
+
             </div>
-          </div>
+         
       
 
-          <div class="col-md-6">
+          <div class="col">  
+
+          <div class="col-md-12">
             <div class="card mb-4" style="height: 450px; overflow-y: auto;">
                 <div class="card-header">{{ __('Proximos Turnos') }}</div>
                 <div class="container">
@@ -121,16 +139,10 @@
                 </div>
             </div>
         </div>
+        </div>
       </div>
     </div>
  
-      <div class="col-md-4">
-        <div class="card mb-4">
-
-          <h1> Cedulas Digitales</h1>
-
-        </div>
-      </div>
     
 
 </section>
@@ -141,23 +153,12 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-{{--<script>
+<script>
     setTimeout(function() {
       location.reload();
-    }, 10000); 
-  </script>--}}
-<script>
-  $(document).ready(function() {
-    // Desplazamiento suave al hacer clic en un enlace del menú
-    $('a[data-scroll]').on('click', function(e) {
-      e.preventDefault();
-      var target = $(this).attr('href');
-      $('html, body').animate({
-        scrollTop: $(target).offset().top
-      }, 500);
-    });
-  });
-</script>
+    }, 120000); 
+  </script>
+
  
 
 @endsection

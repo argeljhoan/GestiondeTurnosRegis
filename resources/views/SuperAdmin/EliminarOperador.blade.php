@@ -7,10 +7,10 @@
         <div class="col-md-8 offset-md-2">
             <div class="card">
                 <div class="card-header">
-                    Confirmar eliminación
+                    Confirmar Inhabilitacion
                 </div>
                 <div class="card-body">
-                    <p>¿Estás seguro de que deseas eliminar este Operador?</p>
+                    <p>¿Estás seguro de que deseas Inhabilitar este Operador?</p>
                     <p><strong>Nombre:</strong> {{ $user->name }}</p>
                     <p><strong>Email:</strong> {{ $user->email }}</p>
                     @can('admin.Eliminar')
@@ -19,7 +19,7 @@
                         @method('delete')
 
                         <div class="d-flex flex-row gap-3 ">
-                            <button type="submit" class="btn btn-danger  ">Eliminar</button>
+                            <button type="submit" class="btn btn-danger  ">Inhabilitar</button>
                             <a href="{{ route('admin.Gestion') }}" class="btn btn-secondary">Cancelar</a>
                         </div>
 

@@ -22,7 +22,15 @@ class ModulosController extends Controller
     public function index()
     {
 
-        $moduloTramites = Modulo_Tramite::with('modulo', 'tramite')->get();
+        $moduloTramites = Modulo_Tramite::whereHas('modulo', function ($query) {
+           $query->where('estadomodulo', 6);
+        })->whereHas('tramite', function ($query) {
+            $query->where('tramiteestado', 6);
+        })->with('modulo', 'tramite')->get();
+
+        $modulosactivos= Modulo::where('estadomodulo',6)->get();
+
+      //  return  $moduloTramites;
 
         $modulosData = [];
 
@@ -54,9 +62,31 @@ class ModulosController extends Controller
             }
         }
 
+
+      
         //return $modulosData;
-         return view('Modulos.Gestion', compact('modulosData'));
+        return view('Modulos.Gestion', compact('modulosData'));
     }
+
+public function inhabilitado($num){
+
+    $modulos = Modulo::where('estadomodulo',7)->get();
+
+
+    return view('Modulos.Habilitar', compact('modulos','num'));
+
+}
+
+public function habilitar(Request $request){
+
+    $modulos = Modulo::where('id',$request->modulo)->first();
+    $modulos->estadomodulo=6;
+    $modulos->save();
+   $num =1;
+    Session::flash('success', 'Modulos Habilitado Exitosamente');
+    return $this->inhabilitado($num);
+}
+
 
     /**
      * Show the form for creating a new resource.
@@ -65,7 +95,8 @@ class ModulosController extends Controller
      */
     public function create()
     {
-        $tramites = Tramite::all();
+        $tramites = Tramite::where('tramiteestado',6)->get();
+       
         return view('Modulos.Registro', compact('tramites'));
     }
 
@@ -84,6 +115,7 @@ class ModulosController extends Controller
         $tramites = $request->tramites;
         $modulo = Modulo::create([
             'nameModulo' => $nombreSinEspacios,
+            'estadomodulo' => 6,
 
         ]);
 
@@ -216,13 +248,15 @@ class ModulosController extends Controller
 
         if ($operador != null) {
            
-            $operador->delete();
-            $modulo->delete();
-
+            $operador->idestado = 7;
+            $operador->save();
+            $modulo->estadomodulo = 7;
+            $modulo->save();
             // El operador fue encontrado, realiza las acciones necesarias aquí
         } else {
             
-            $modulo->delete();
+            $modulo->estadomodulo = 7;
+            $modulo->save();
         }
 
         return redirect()->route('Modulos.Gestion');

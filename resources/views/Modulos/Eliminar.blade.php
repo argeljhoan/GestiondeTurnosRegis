@@ -39,7 +39,7 @@
 
 @endsection
 @section('scripts')
-<script src="{{ asset('js/app.js') }}"></script>
+
 <script>
     setTimeout(function() {
         var errorMessage = document.getElementById('error-message');
@@ -49,16 +49,5 @@
     }, 5000);
 </script>
 
-<script>
-    $(document).ready(function() {
-      // Selecciona el elemento con la clase 'dropdown-toggle' y agrega el evento de clic
-      $('.dropdown-toggle').click(function() {
-        // Obtiene el menú desplegable asociado al elemento clicado
-        var dropdownMenu = $(this).next('.dropdown-menu');
-  
-        // Verifica si el menú está oculto o visible y lo alterna
-        dropdownMenu.toggle();
-      });
-    });
-  </script>
+
 @endsection

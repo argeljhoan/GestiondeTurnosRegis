@@ -28,7 +28,7 @@
 @section('scripts')
 
 
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+
 <script>
 
  

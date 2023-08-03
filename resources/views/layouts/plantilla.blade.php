@@ -16,7 +16,7 @@
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
     <!-- Scripts -->
-    <script async src="{{ asset('images/js') }}"></script>
+   
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
@@ -38,11 +38,7 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
-
-                    </ul>
-
+                  
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
@@ -50,12 +46,13 @@
                       
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                               Home
+                                Home
                             </a>
+
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ route('admin.Inicio') }}">Inicio <span class="sr-only"></span></a>
+                            <a class="dropdown-item" href="{{ route('admin.Inicio') }}">Inicio</a>
                             @can('admin.home')
-                            <a class="dropdown-item" href="{{ route('admin.home') }}">Dashboard <span class="sr-only"></span></a>
+                            <a class="dropdown-item" href="{{ route('admin.home') }}">Dashboard </a>
                             @endcan
                             </div>
                         </li>
@@ -67,9 +64,9 @@
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ route('admin.Gestion') }}">Gestion <span class="sr-only"></span></a>
+                                <a class="dropdown-item" href="{{ route('admin.Gestion') }}">Gestion </a>
                             
-                                <a class="dropdown-item" href="{{ route('admin.inhabilitados') }}">Operadores Inhabilitados <span class="sr-only"></span></a>
+                                <a class="dropdown-item" href="{{ route('admin.inhabilitados') }}">Operadores Inhabilitados</a>
                               
                             </div>
 
@@ -82,9 +79,9 @@
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ route('Modulos.Gestion') }}">Gestion <span class="sr-only"></span></a>
+                                <a class="dropdown-item" href="{{ route('Modulos.Gestion') }}">Gestion </span></a>
                             
-                                <a class="dropdown-item" href="{{ route('Modulos.inhabilitados',['num' => '1']) }}">Modulos Inhabilitados <span class="sr-only"></span></a>
+                                <a class="dropdown-item" href="{{ route('Modulos.inhabilitados',['num' => '1']) }}">Modulos Inhabilitados </a>
                               
                             </div>
                             
@@ -99,9 +96,9 @@
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ route('Tramites.Gestion') }}">Gestion <span class="sr-only"></span></a>
+                                <a class="dropdown-item" href="{{ route('Tramites.Gestion') }}">Gestion </a>
                             
-                                <a class="dropdown-item" href="{{ route('Tramites.inhabilitados',['num' => '2']) }}">Tramites Inhabilitados <span class="sr-only"></span></a>
+                                <a class="dropdown-item" href="{{ route('Tramites.inhabilitados',['num' => '2']) }}">Tramites Inhabilitados </span></a>
                               
                             </div>
                            
@@ -205,9 +202,11 @@
     
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
-   
-    <script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.10.2/umd/popper.min.js"></script>
+    {{--
+        
+         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+        <script>
         document.addEventListener('DOMContentLoaded', function() {
             var dropdownToggle = document.querySelector('.dropdown-toggle');
             dropdownToggle.addEventListener('click', function(e) {
@@ -226,7 +225,8 @@
                 }
             });
         });
-    </script>
+    </script>--}}
+   
      @yield('scripts')
 </body>
 </html>

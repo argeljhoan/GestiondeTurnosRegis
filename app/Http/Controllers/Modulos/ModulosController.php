@@ -22,21 +22,49 @@ class ModulosController extends Controller
     public function index()
     {
 
-        $moduloTramites = Modulo_Tramite::whereHas('modulo', function ($query) {
-           $query->where('estadomodulo', 6);
-        })->whereHas('tramite', function ($query) {
-            $query->where('tramiteestado', 6);
-        })->with('modulo', 'tramite')->get();
+        // $moduloTramites = Modulo_Tramite::whereHas('modulo', function ($query) {
+        //    $query->where('estadomodulo', 6);
+        // })->whereHas('tramite', function ($query) {
+        //     $query->where('tramiteestado', 6);
+        // })->with('modulo', 'tramite')->get();
+        $moduloTramites = [];
 
-        $modulosactivos= Modulo::where('estadomodulo',6)->get();
+        $modulosactivos = Modulo::where('estadomodulo', 6)->get();
+        
+        foreach ($modulosactivos as $modul) {
+            $moduloTramite = Modulo_Tramite::where('id_modulo', $modul->id)
+                ->whereHas('tramite', function ($query) {
+                    $query->where('tramiteestado', 6);
+                })->with('modulo', 'tramite')->get();
+        
+                if ($moduloTramite->isEmpty()) {
+                    array_push($moduloTramites, $modul);
+                } else {
+                    array_push($moduloTramites, $moduloTramite);
+                }
 
-      //  return  $moduloTramites;
+           
+        }
+       
 
         $modulosData = [];
 
         foreach ($moduloTramites as $moduloTramite) {
-            $moduloId = $moduloTramite->modulo->id;
-            $user_id = $moduloTramite->modulo->user_id;
+         
+       
+         foreach($moduloTramite as $modul){
+          
+            if (isset($modul->modulo->id)) {
+              
+                $moduloId = $modul->modulo->id;
+                $user_id = $modul->modulo->user_id;
+            } else {
+                
+                $moduloId = $moduloTramite->id;
+                $user_id = $moduloTramite->user_id;
+            }
+         
+            
             $operador = User::find($user_id);
             
             // Verificar si el operador existe
@@ -50,16 +78,57 @@ class ModulosController extends Controller
             // Verificar si el módulo ya existe en $modulosData
             if (isset($modulosData[$moduloId])) {
                 // El módulo ya existe, agregar el trámite a la lista de trámites del módulo
-                $modulosData[$moduloId]['tramites'][] = $moduloTramite->tramite->name;
+               
+            $comparar =  $modulosData[$moduloId]['tramites'];
+            $ultimoTramite = end($comparar);
+            $tramiteExiste = false;
+           
+
+            
+                if ($ultimoTramite == 'Sin Tramites') {
+                    // No se hace nada, ya que es la marca de "Sin Tramites"
+                } else{
+                    
+                if ($ultimoTramite == $modul->tramite->name) {
+                    $tramiteExiste = true;
+                    break;
+
+                }
+                if (!$tramiteExiste) {
+                    $modulosData[$moduloId]['tramites'][] = $modul->tramite->name;
+                }
+            }
+            
+           
+         
+            
+              
+               // 
             } else {
                 // El módulo no existe, crear una nueva entrada en $modulosData
-                $modulosData[$moduloId] = [
-                    'id' => $moduloTramite->modulo->id,
-                    'modulo' => $moduloTramite->modulo->nameModulo,
-                    'tramites' => [$moduloTramite->tramite->name],
-                    'User' => $operadorName,
-                ];
+              
+                if (isset($modul->modulo->id)) {
+                  
+                    $modulosData[$moduloId] = [
+                        'id' => $modul->modulo->id,
+                        'modulo' => $modul->modulo->nameModulo,
+                        'tramites' => [$modul->tramite->name],
+                        'User' => $operadorName,
+                    ];
+                } else {
+                   
+                    $modulosData[$moduloId] = [
+                        'id' => $moduloTramite->id,
+                        'modulo' => $moduloTramite->nameModulo,
+                        'tramites' => ['Sin Tramites'],
+                        'User' => $operadorName,
+                    ];
+                }
+              
+              
+                
             }
+        }
         }
 
 
